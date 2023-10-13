@@ -2,10 +2,10 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-# import ZODB, ZODB.FileStorage
-# import persistent
-# import transaction
-# from BTrees.OOBTree import OOBTree
+import ZODB, ZODB.FileStorage
+import persistent
+import transaction
+from BTrees.OOBTree import OOBTree
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -31,8 +31,7 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     # users = root["users"].values()
-    users = "roshan"
-    print(request.headers)
+    users = "user1"
     return templates.TemplateResponse("home.html", {"request": request, "users": users})
 
 # # Define routes for signup and login
@@ -65,6 +64,3 @@ async def home(request: Request):
 # async def friends(request: Request):
 #     return templates.TemplateResponse("friends.html", {"request": request})
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

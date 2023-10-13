@@ -27,8 +27,8 @@ Web_project/
 │   ├── signup.html
 │   ├── friends.html
 │
-├── zodb-data/
-│   ├── myfacebook.fs  # ZODB database file
+├── db/
+│   ├── data.fs  # ZODB database file
 │
 ├── requirements.txt
 ├── README.md
