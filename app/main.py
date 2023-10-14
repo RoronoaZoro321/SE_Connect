@@ -1,38 +1,49 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
+from models import User
+
 
 import ZODB, ZODB.FileStorage
-import persistent
-import transaction
-from BTrees.OOBTree import OOBTree
-
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
-
-# Models for your application
-# class User(Persistent):
-#     def __init__(self, username, password):
-#         self.username = username
-#         self.password = password
-#         self.friends = set()
-#         self.posts = []
+# import persistent
+# import transaction
+import BTrees.OOBTree
 
 # Database setup
-# db = DB()
-# connection = db.open()
-# root = connection.root
+storage = ZODB.FileStorage.FileStorage("mydata.fs")
+db = ZODB.DB(storage)
+connection = db.open()
+root = connection.root
+
+# obj in db
+root.users = BTrees.OOBTree.BTree()
+root.users["user1"] = User(1, "username", "fname", "lname", "pwd")
 
 # if "users" not in root:
 #     root["users"] = OOBTree()
 # transaction.commit()
 
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
 # FastAPI route for the home page
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    # users = root["users"].values()
-    users = "user1"
-    return templates.TemplateResponse("home.html", {"request": request, "users": users})
+    username = 'root["user1"].username'
+    return templates.TemplateResponse("home.html", {"request": request, "users": username})
+
+@app.get("/all_users", response_class=HTMLResponse)
+async def all_users():
+    users = list(root["users"].values())
+    return users
+
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+
 
 # # Define routes for signup and login
 # @app.get("/signup", response_class=HTMLResponse)
@@ -63,4 +74,6 @@ async def home(request: Request):
 # @app.get("/friends", response_class=HTMLResponse)
 # async def friends(request: Request):
 #     return templates.TemplateResponse("friends.html", {"request": request})
+
+
 
