@@ -1,14 +1,17 @@
+import ZODB
+import ZODB.FileStorage
+import persistent
+import transaction
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
-
-import ZODB, ZODB.FileStorage
-import persistent
-import transaction
 from BTrees.OOBTree import OOBTree
 
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+from backend.core.config import settings
+
+app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+
+templates = Jinja2Templates(directory="backend/templates")
 
 # Models for your application
 # class User(Persistent):
@@ -28,6 +31,8 @@ templates = Jinja2Templates(directory="templates")
 # transaction.commit()
 
 # FastAPI route for the home page
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     # users = root["users"].values()
@@ -63,4 +68,3 @@ async def home(request: Request):
 # @app.get("/friends", response_class=HTMLResponse)
 # async def friends(request: Request):
 #     return templates.TemplateResponse("friends.html", {"request": request})
-

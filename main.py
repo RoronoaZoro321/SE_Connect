@@ -1,5 +1,5 @@
 import uvicorn
-from app.main import app  # Assuming your FastAPI app is defined in app/main.py
+from backend.main import app  # Assuming your FastAPI app is defined in backend/main.py
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
