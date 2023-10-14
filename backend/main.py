@@ -8,8 +8,10 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from BTrees.OOBTree import OOBTree
 
 from backend.core.config import settings
+from backend.apis.base import api_router
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+app.include_router(api_router)
 
 templates = Jinja2Templates(directory="backend/templates")
 
