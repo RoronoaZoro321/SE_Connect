@@ -10,10 +10,73 @@ from BTrees.OOBTree import OOBTree
 from backend.core.config import settings
 from backend.apis.base import api_router
 
+
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
 app.include_router(api_router)
 
 templates = Jinja2Templates(directory="backend/templates")
+
+storage = ZODB.FileStorage.FileStorage("backend/db/mydb.fs")
+db = ZODB.DB(storage)
+
+
+# Define route for home
+@app.get("/")
+def home(request: Request):
+    # users = root["users"].values()
+    users = "user1"
+    return templates.TemplateResponse("home.html", {"request": request, "users": users})
+
+
+# Define route for signup
+@app.get("/signup", response_class=HTMLResponse)
+async def signup(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+
+# Define route for login
+@app.get("/login", response_class=HTMLResponse)
+async def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@app.get("/getUser/{user_id}")
+def get_user(user_id: int):
+    pass
+    # Open a ZODB connection
+    connection = db.open()
+    root = connection.root()
+
+    try:
+        # Retrieve data by ID from the ZODB database
+        if user_id in root:
+            user = root[user_id]
+            return user
+        else:
+            raise HTTPException(status_code=404, detail="User not found")
+    finally:
+        connection.close()
+
+
+@app.post("/createUser")
+def create_user(user: dict):
+    pass
+    # Create a ZODB connection and transaction
+    connection = db.open()
+    root = connection.root()
+
+    try:
+        # Get the next available data ID
+        user_id = 1
+        user['id'] = user_id
+
+        # Store data in the ZODB database with the assigned ID
+        root[user_id] = user
+        transaction.commit()
+
+        return {"message": "User created successfully", "id": user_id}
+    finally:
+        connection.close()
 
 # Models for your application
 # class User(Persistent):
@@ -35,16 +98,11 @@ templates = Jinja2Templates(directory="backend/templates")
 # FastAPI route for the home page
 
 
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    # users = root["users"].values()
-    users = "user1"
-    return templates.TemplateResponse("home.html", {"request": request, "users": users})
-
-# # Define routes for signup and login
-# @app.get("/signup", response_class=HTMLResponse)
-# async def signup(request: Request):
-#     return templates.TemplateResponse("signup.html", {"request": request})
+# @app.get("/", response_class=HTMLResponse)
+# async def home(request: Request):
+#     # users = root["users"].values()
+#     users = "user1"
+#     return templates.TemplateResponse("home.html", {"request": request, "users": users})
 
 # @app.post("/signup")
 # async def signup(username: str, password: str):
@@ -53,10 +111,6 @@ async def home(request: Request):
 #         root["users"][username] = user
 #         transaction.commit()
 #     return RedirectResponse("/", status_code=303)
-
-# @app.get("/login", response_class=HTMLResponse)
-# async def login(request: Request):
-#     return templates.TemplateResponse("login.html", {"request": request})
 
 # @app.post("/login")
 # async def login(username: str, password: str):
