@@ -1,126 +1,76 @@
 import ZODB
 import ZODB.FileStorage
-import persistent
 import transaction
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
-from BTrees.OOBTree import OOBTree
-
+from fastapi.responses import HTMLResponse
 from backend.core.config import settings
 from backend.apis.base import api_router
-
+from backend.db.models import User, Post
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
 app.include_router(api_router)
 
 templates = Jinja2Templates(directory="backend/templates")
 
+# Create a ZODB storage and database connection
 storage = ZODB.FileStorage.FileStorage("backend/db/mydb.fs")
 db = ZODB.DB(storage)
 
 
-# Define route for home
-@app.get("/")
-def home(request: Request):
-    # users = root["users"].values()
-    users = "user1"
-    return templates.TemplateResponse("home.html", {"request": request, "users": users})
+
+# # Create a sample user and add it to the database
+# user = User(2, "username", "firstname", "surname", "password")
+# root.users[2] = user
 
 
-# Define route for signup
-@app.get("/signup", response_class=HTMLResponse)
-async def signup(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
-
-
-# Define route for login
-@app.get("/login", response_class=HTMLResponse)
-async def login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-
-
-@app.get("/getUser/{user_id}")
-def get_user(user_id: int):
-    pass
-    # Open a ZODB connection
+@app.post("/register")
+def register(id: int, username: str, firstName: str, lastname: str, password: str):
     connection = db.open()
     root = connection.root()
 
     try:
-        # Retrieve data by ID from the ZODB database
-        if user_id in root:
-            user = root[user_id]
-            return user
-        else:
-            raise HTTPException(status_code=404, detail="User not found")
-    finally:
-        connection.close()
+        # Check for duplicate emails
 
+        # Create a UserData object and store it in the ZODB
+        user_data = User(id, username, firstName, lastname, password)
+        root[id] = user_data
 
-@app.post("/createUser")
-def create_user(user: dict):
-    pass
-    # Create a ZODB connection and transaction
-    connection = db.open()
-    root = connection.root()
-
-    try:
-        # Get the next available data ID
-        user_id = 1
-        user['id'] = user_id
-
-        # Store data in the ZODB database with the assigned ID
-        root[user_id] = user
+        # Commit the transaction
         transaction.commit()
 
-        return {"message": "User created successfully", "id": user_id}
+        return {"message": "Registration successful"}
     finally:
         connection.close()
 
-# Models for your application
-# class User(Persistent):
-#     def __init__(self, username, password):
-#         self.username = username
-#         self.password = password
-#         self.friends = set()
-#         self.posts = []
+# get single user
+@app.get("/getUser/{user_id}")
+def getUserSingle(request: Request, user_id: int):
+    connection = db.open()
+    root = connection.root()
+    try:
+        user = root[user_id]
+        return user
+    except:
+        return {"message": "User not found"}
+    finally:
+        connection.close()
 
-# Database setup
-# db = DB()
-# connection = db.open()
-# root = connection.root
+# get all users
+@app.get("/getUsers")
+def getUsers(request: Request):
+    connection = db.open()
+    root = connection.root()
+    try:
+        users = root
+        return users
+    except:
+        return {"message": "no user"}
+    finally:
+        connection.close()
 
-# if "users" not in root:
-#     root["users"] = OOBTree()
-# transaction.commit()
-
-# FastAPI route for the home page
-
-
-# @app.get("/", response_class=HTMLResponse)
-# async def home(request: Request):
-#     # users = root["users"].values()
-#     users = "user1"
-#     return templates.TemplateResponse("home.html", {"request": request, "users": users})
-
-# @app.post("/signup")
-# async def signup(username: str, password: str):
-#     if username not in root["users"]:
-#         user = User(username, password)
-#         root["users"][username] = user
-#         transaction.commit()
-#     return RedirectResponse("/", status_code=303)
-
-# @app.post("/login")
-# async def login(username: str, password: str):
-#     user = root["users"].get(username)
-#     if user and user.password == password:
-#         # You can implement user authentication logic here
-#         return RedirectResponse("/friends", status_code=303)
-#     return RedirectResponse("/login", status_code=303)
-
-# # Example route for friends page
-# @app.get("/friends", response_class=HTMLResponse)
-# async def friends(request: Request):
-#     return templates.TemplateResponse("friends.html", {"request": request})
+# # close the database connection when the application stops
+# @app.on_event("shutdown")
+# async def shutdown():
+#     transaction.commit()  # Commit any open transactions
+#     connection.close()
