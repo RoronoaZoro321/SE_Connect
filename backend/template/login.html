@@ -6,23 +6,26 @@
     <link rel="stylesheet" href="login.css">
     <title>Login Page</title>
 </head>
-<body>
+<body align="center">
     <div class="login_container">
         <h2>Login</h2>
         <form id="login-form">
             <div class="input-group custom1">
-                <input type="text" id="username" name="username" placeholder="Username" 
-                    style="background: #F45050" required>
+                <input type="text" id="username" name="username" placeholder="Username" required>
             </div>
             <div class="input-group custom2">
-                <input type="password" id="password" name="password" placeholder="Password" 
-                    style="background: #F45050" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
-            <div class="input-group">
+            <div class="forget-password">
                 <a href="#" id="forgot-password">Forgot Password?</a>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" class="submit">LOGIN</button>
         </form>
+    </div>
+    <div class="to-sign-up">
+        <p>Don't have an account? 
+            <span> Sign up</span>
+        </p>
     </div>
     <script src="script.js"></script>
 </body>

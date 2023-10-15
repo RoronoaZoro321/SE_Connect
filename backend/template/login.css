@@ -2,6 +2,8 @@ html {
     background: #3C486B;
 }
 
+
+
 h2 {
     color: #F9D949;
     font-size: 96px;
@@ -10,9 +12,48 @@ h2 {
     word-wrap: break-word
 }
 
-.custom1 input-group1 {
+.input-group input[type="text"] {
+    margin: 30px;
     width: 280px;
     height: 30px;
     background: #F45050;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.input-group.custom2 input[type="password"] {
+    width: 280px;
+    height: 30px;
+    background: #F45050;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.forget-password.a {
+    color: #F0F0F0;
+    font-size: 12px;
+    font-family: Judson;
+    font-weight: 400;
+    word-wrap: break-word
+}
+
+.submit {
+    width: 80px; 
+    height: 30px; 
+    mix-blend-mode: color-burn; 
+    background: #D9D9D9
+}
+
+.to-sign-up {
+    color: #FFFFFF;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.to-sign-up span {
+    color: #F9D949;
+    font-weight: bold; 
+    text-decoration: underline; 
+    cursor: pointer;
 }
