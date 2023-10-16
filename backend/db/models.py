@@ -2,8 +2,8 @@ import persistent
 
 
 class User(persistent.Persistent):
-    def __init__(self, id: int, username: str, firstname: str, lastname: str, password: str):
-        self.id = id
+    def __init__(self, student_id: int, username: str, firstname: str, lastname: str, password: str):
+        self.student_id = student_id
         self.username = username
         self.firstname = firstname
         self.lastname = lastname
@@ -29,8 +29,8 @@ class User(persistent.Persistent):
     def set_password(self, password: str):
         self.password = password
 
-    def get_id(self):
-        return self.id
+    def get_student_id(self):
+        return self.student_id
 
     def get_username(self):
         return self.username

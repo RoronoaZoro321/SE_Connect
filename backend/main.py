@@ -1,7 +1,7 @@
 import ZODB
 import ZODB.FileStorage
 import transaction
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Depends, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from backend.core.config import settings
@@ -16,61 +16,71 @@ templates = Jinja2Templates(directory="backend/templates")
 # Create a ZODB storage and database connection
 storage = ZODB.FileStorage.FileStorage("backend/db/mydb.fs")
 db = ZODB.DB(storage)
+connection = db.open()
+root = connection.root()
+if "users" not in root:
+    root["users"] = {}
+
+# Home route
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
 
 
+# Login route
+@app.post("/login")
+async def login(username: str = Form(...), password: str = Form(...)):
+    user = root["users"].get(username)
+    if user is None or user.password != password:
+        raise HTTPException(status_code=400, detail="Invalid username or password")
+    return {"message": "Login successful"}
 
-# # Create a sample user and add it to the database
-# user = User(2, "username", "firstname", "surname", "password")
-# root.users[2] = user
-
-
-@app.post("/register")
-def register(id: int, username: str, firstName: str, lastname: str, password: str):
-    connection = db.open()
-    root = connection.root()
-
+@app.post("/signup")
+async def signup(id: int, username: str, firstName: str, lastname: str, password: str):
     try:
-        # Check for duplicate emails
-
+        # Check for duplicate id
+        if id in root["users"]:
+            raise HTTPException(status_code=400, detail="This Id already exists")
+        print("here1")
         # Create a UserData object and store it in the ZODB
-        user_data = User(id, username, firstName, lastname, password)
-        root[id] = user_data
+        user = User(id, username, firstName, lastname, password)
+        root["users"][id] = user
+        print("here2")
+
 
         # Commit the transaction
         transaction.commit()
+        print("here3")
 
-        return {"message": "Registration successful"}
-    finally:
-        connection.close()
+
+        # return templates.TemplateResponse("signup_success.html", {"request": request})
+        return {"message": "User created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # get single user
-@app.get("/getUser/{user_id}")
-def getUserSingle(request: Request, user_id: int):
-    connection = db.open()
-    root = connection.root()
+@app.get("/getUser")
+def getUserSingle(user_id: int):
     try:
-        user = root[user_id]
+        user = root["users"].get(user_id)
+        if user is None:
+            raise HTTPException(status_code=400, detail="User not found")
         return user
-    except:
-        return {"message": "User not found"}
-    finally:
-        connection.close()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # get all users
 @app.get("/getUsers")
-def getUsers(request: Request):
-    connection = db.open()
-    root = connection.root()
+def getUsers():
     try:
-        users = root
+        users = root["users"]
+        if users is None:
+            raise HTTPException(status_code=400, detail="No users found")
         return users
-    except:
-        return {"message": "no user"}
-    finally:
-        connection.close()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# # close the database connection when the application stops
-# @app.on_event("shutdown")
-# async def shutdown():
-#     transaction.commit()  # Commit any open transactions
-#     connection.close()
+# Close the database connection when the application stops
+@app.on_event("shutdown")
+async def shutdown():
+    connection.close()
