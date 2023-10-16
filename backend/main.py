@@ -25,7 +25,10 @@ connection = db.open()
 root = connection.root()
 
 # Use BTrees.OOBTree to store users
-root.users = BTrees.OOBTree.BTree()
+print(hasattr(root, "users"))
+if not hasattr(root, "users"):
+    root.users = BTrees.OOBTree.BTree()
+
 
 # Home route
 @app.get("/", response_class=HTMLResponse)
@@ -33,21 +36,23 @@ async def read_root(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 # Login route
-@app.post("/login")
-async def login(username: str = Form(...), password: str = Form(...)):
-    user = root.users.get(username)
-    if user is None or user.password != password:
-        raise HTTPException(status_code=400, detail="Invalid username or password")
-    return {"message": "Login successful"}
+# @app.post("/login")
+# async def login(username: str = Form(...), password: str = Form(...)):
+#     user = root.users.get(username)
+#     if user is None or user.password != password:
+#         raise HTTPException(status_code=400, detail="Invalid username or password")
+#     return {"message": "Login successful"}
+
 
 @app.post("/signup")
-def signup(id: int, username: str, firstName: str, lastname: str, password: str):
+def signup(id: int, username: str, firstName: str, lastName: str, password: str):
     try:
         # Check for duplicate id
         if id in root.users:
-            raise HTTPException(status_code=400, detail="This Id already exists")
+            raise HTTPException(
+                status_code=400, detail="This Id already exists")
         # Create a UserData object and store it in the BTrees.OOBTree
-        user = User(id, username, firstName, lastname, password)
+        user = User(id, username, firstName, lastName, password)
         root.users[id] = user
 
         # Commit the transaction
@@ -56,6 +61,7 @@ def signup(id: int, username: str, firstName: str, lastname: str, password: str)
         return {"message": "User created successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 # get single user
 @app.get("/getUser")
@@ -66,10 +72,12 @@ def getUserSingle(user_id: int):
             raise HTTPException(status_code=400, detail="No users found")
         user = users.get(user_id)
         if user is None:
-            raise HTTPException(status_code=400, detail="No user found for this id")
+            raise HTTPException(
+                status_code=400, detail="No user found for this id")
         return user
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 # get all users
 @app.get("/getAllUsers")
@@ -86,4 +94,4 @@ def getAllUsers():
 @app.on_event("shutdown")
 async def shutdown():
     transaction.commit()
-    connection.close()
+    db.close()
