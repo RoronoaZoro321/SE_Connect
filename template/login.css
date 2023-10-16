@@ -1,0 +1,77 @@
+body {
+    background: #3C486B;
+}
+
+h2 {
+    color: #F9D949;
+    -webkit-text-stroke: 3px black;
+    font-size: 84px;
+    margin-top: 155px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: 50px;
+}
+
+input[type="text"],
+input[type="password"] {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    width: 25%;
+    height: 30px;
+    padding: 8px;
+    margin: 15px;
+    font-size: 16px;
+    background-color: #F45050;
+}
+
+.forget-password {
+    padding-top: 10px;
+    margin-left: 280px;
+    text-align: center;
+}
+
+.forget-password a {
+    color: #d1d1d1; 
+    text-decoration: underline; 
+    font-size: 14px; 
+    text-align: right;
+}
+
+.forget-password a:hover {
+    color: rgb(246, 91, 91);
+}
+
+button {
+    background: #2c354f;
+    color: #F9D949;
+    margin-top: 30px;
+    border: none;
+    padding: 10px 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #181d2b;
+}
+
+.to-sign-up {
+    color: #FFFFFF;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.to-sign-up span {
+    color: #F9D949;
+    font-weight: bold; 
+    text-decoration: underline; 
+    cursor: pointer;
+}
+
+.to-sign-up span:hover {
+    color: #ffea8b;
+    font-weight: bold; 
+    text-decoration: underline; 
+    cursor: pointer;
+}
