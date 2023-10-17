@@ -35,6 +35,9 @@ if not hasattr(root, "users"):
 async def read_root(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
+
+
+
 # Login route
 # @app.post("/login")
 # async def login(username: str = Form(...), password: str = Form(...)):
@@ -60,12 +63,31 @@ def signup(id: int, username: str, firstName: str, lastName: str, password: str)
 
         return {"message": "User created successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise e
 
 
 # get single user
 @app.get("/getUser")
 def getUserSingle(user_id: int):
+    try:
+        users = root.users
+        print(users)
+        user = users.get(user_id)
+        print(user)
+        if users is None:
+            raise HTTPException(status_code=400, detail="No users found")
+        elif user is None:
+            raise HTTPException(
+                status_code=400, detail="No user found for this id")
+        else:
+            return user
+    except Exception as e:
+        raise e
+
+
+# delete single user
+@app.delete("/deleteUser")
+def deleteUser(user_id: int):
     try:
         users = root.users
         if users is None:
@@ -74,10 +96,11 @@ def getUserSingle(user_id: int):
         if user is None:
             raise HTTPException(
                 status_code=400, detail="No user found for this id")
-        return user
+        del users[user_id]
+        transaction.commit()
+        return {"message": "User deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+        raise e
 
 # get all users
 @app.get("/getAllUsers")
@@ -89,6 +112,8 @@ def getAllUsers():
         return users
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
 
 # Close the database connection when the application stops
 @app.on_event("shutdown")
