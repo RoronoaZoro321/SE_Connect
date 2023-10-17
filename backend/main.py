@@ -31,8 +31,8 @@ root = connection.root()
 print(hasattr(root, "users"))
 if not hasattr(root, "users"):
     root.users = BTrees.OOBTree.BTree()
-
-
+  
+  
 # Home route
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
