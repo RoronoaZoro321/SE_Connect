@@ -3,3 +3,4 @@ uvicorn
 zodb
 jinja2
 python-multipart
+pyjwt
