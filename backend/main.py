@@ -36,15 +36,19 @@ async def read_root(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 
-
-
 # Login route
-# @app.post("/login")
-# async def login(username: str = Form(...), password: str = Form(...)):
-#     user = root.users.get(username)
-#     if user is None or user.password != password:
-#         raise HTTPException(status_code=400, detail="Invalid username or password")
-#     return {"message": "Login successful"}
+@app.post("/login")
+def login(username: str = Form(...), password: str = Form(...)):
+    try:
+        users = root.users
+        if users is None:
+            raise HTTPException(status_code=400, detail="No users found")
+        for user in users.values():
+            if user.username == username and user.password == password:
+                return {"message": "Login successful"}
+        raise HTTPException(status_code=400, detail="Invalid credentials")
+    except Exception as e:
+        raise e
 
 
 @app.post("/signup")
@@ -84,6 +88,17 @@ def getUserSingle(user_id: int):
     except Exception as e:
         raise e
 
+# get all users
+@app.get("/getAllUsers")
+def getAllUsers():
+    try:
+        users = root.users
+        if users is None:
+            raise HTTPException(status_code=400, detail="No users found")
+        return users
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # delete single user
 @app.delete("/deleteUser")
@@ -102,17 +117,26 @@ def deleteUser(user_id: int):
     except Exception as e:
         raise e
 
-# get all users
-@app.get("/getAllUsers")
-def getAllUsers():
+
+# Update user
+@app.put("/updateUser")
+def updateUser(user_id: int, username: str, firstName: str, lastName: str, password: str):
     try:
         users = root.users
         if users is None:
             raise HTTPException(status_code=400, detail="No users found")
-        return users
+        user = users.get(user_id)
+        if user is None:
+            raise HTTPException(
+                status_code=400, detail="No user found for this id")
+        user.username = username
+        user.firstname = firstName
+        user.lastname = lastName
+        user.password = password
+        transaction.commit()
+        return {"message": "User updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+        raise e
 
 
 # Close the database connection when the application stops

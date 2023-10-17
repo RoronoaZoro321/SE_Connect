@@ -1,1 +1,5 @@
 __pycache__/
+backend/db/db.fs
+backend/db/db.fs.index
+backend/db/df.fs.lock
+backend/db/db.js.tmp
