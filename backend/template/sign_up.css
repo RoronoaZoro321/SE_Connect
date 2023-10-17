@@ -18,8 +18,12 @@ h2 {
 }
 
 .signup-container {
-    margin: 10px;
-    text-align: center;
+    background: #6b78a181;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 0;
+    border-radius: 20px;
+    padding: 5px;
 }
 
 .form-group {
@@ -39,7 +43,7 @@ input[type="password"] {
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    background-color: #F45050;
+    background-color: #6b78a181;
 }
 
 button {
