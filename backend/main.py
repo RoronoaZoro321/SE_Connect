@@ -20,13 +20,13 @@ app.include_router(api_router)
 app.mount("/static", app=StaticFiles(directory="backend/static"), name="static")
 
 templates = Jinja2Templates(directory="backend/templates")
-
+  
 # Create a ZODB storage and database connection
 storage = ZODB.FileStorage.FileStorage("backend/db/db.fs")
 db = ZODB.DB(storage)
 connection = db.open()
 root = connection.root()
-
+   
 # Use BTrees.OOBTree to store users
 print(hasattr(root, "users"))
 if not hasattr(root, "users"):
