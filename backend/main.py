@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request, HTTPException, Depends, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from typing import Annotated
 from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
@@ -35,7 +36,8 @@ if not hasattr(root, "users"):
 # Home route
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    username = "roshan"
+    getUser()
+    username = getUser()
     return templates.TemplateResponse("home.html", {"request": request, "username": username})
 
 @app.get("/login", response_class=HTMLResponse)
@@ -48,13 +50,13 @@ async def read_root(request: Request):
 
 # Login route
 @app.post("/login")
-def login(username_login: int = Form(...), password_login: str = Form(...)):
+def login(student_id: Annotated[int, Form()], password: Annotated[str, Form()]):
     try:
         users = root.users
         if users is None:
             raise HTTPException(status_code=400, detail="No users found")
         for user in users.values():
-            if user.student_id == username_login and user.password == password_login:
+            if user.student_id == student_id and user.password == password:
                 return {"message": "Login successful"}
         raise HTTPException(status_code=400, detail="Invalid credentials")
     except Exception as e:
