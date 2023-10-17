@@ -4,27 +4,40 @@ body {
 
 h2 {
     color: #F9D949;
-    -webkit-text-stroke: 3px black;
-    font-size: 84px;
-    margin-top: 155px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    font-size: 72px;
+    margin-top: 40px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
     margin-bottom: 50px;
+}
+
+.login_container {
+    background: #6b78a181;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 10%;
+    border-radius: 20px;
+    padding: 5px;
+    
 }
 
 input[type="text"],
 input[type="password"] {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    width: 25%;
+    width: 75%;
     height: 30px;
     padding: 8px;
     margin: 15px;
     font-size: 16px;
-    background-color: #F45050;
+    background-color: #262b46;
+    /* F45050 */
+    
 }
 
 .forget-password {
+
     padding-top: 10px;
-    margin-left: 280px;
+    margin-left: auto;
     text-align: center;
 }
 
@@ -43,6 +56,7 @@ button {
     background: #2c354f;
     color: #F9D949;
     margin-top: 30px;
+    margin-bottom: 10%;
     border: none;
     padding: 10px 30px;
     font-size: 18px;
@@ -62,15 +76,15 @@ button:hover {
     text-align: center;
 }
 
-.to-sign-up span {
-    color: #F9D949;
+.to-sign-up span a{
+    color: #ffff8d;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
 }
 
-.to-sign-up span:hover {
-    color: #ffea8b;
+.to-sign-up span a:hover {
+    color: #ff0000;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
