@@ -1,16 +1,18 @@
 import ZODB
 import ZODB.FileStorage
 import transaction
-from fastapi import FastAPI, Request, HTTPException, Depends, Form
+import BTrees.OOBTree
+import logging
+from fastapi import FastAPI, Request, HTTPException, Depends, Form, Response, Cookie
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from typing import Annotated
+
 from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
-import BTrees.OOBTree
-import logging
+from backend.services.User import UserServ
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -20,47 +22,46 @@ app.include_router(api_router)
 app.mount("/static", app=StaticFiles(directory="backend/static"), name="static")
 
 templates = Jinja2Templates(directory="backend/templates")
-  
+
 # Create a ZODB storage and database connection
 storage = ZODB.FileStorage.FileStorage("backend/db/db.fs")
 db = ZODB.DB(storage)
 connection = db.open()
 root = connection.root()
-   
+
 # Use BTrees.OOBTree to store users
 print(hasattr(root, "users"))
 if not hasattr(root, "users"):
     root.users = BTrees.OOBTree.BTree()
-  
-  
+
+
 # Home route
 @app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    getUser()
-    username = getUser()
+async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    username = user.get_firstname() if user else "User"
     return templates.TemplateResponse("home.html", {"request": request, "username": username})
+
 
 @app.get("/login", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+
 @app.get("/signup", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
-# Login route
+
 @app.post("/login")
-def login(student_id: Annotated[int, Form()], password: Annotated[str, Form()]):
-    try:
-        users = root.users
-        if users is None:
-            raise HTTPException(status_code=400, detail="No users found")
-        for user in users.values():
-            if user.student_id == student_id and user.password == password:
-                return {"message": "Login successful"}
-        raise HTTPException(status_code=400, detail="Invalid credentials")
-    except Exception as e:
-        raise e
+def login(response: Response, student_id: Annotated[int, Form()], password: Annotated[str, Form()]):
+    sessionId = UserServ.loginUser(student_id, password, root)
+
+    if sessionId:
+        response.set_cookie(key="sessionId", value=sessionId)
+        return {"message": "Login successful"}
+
+    return {"message": "Invalid credentials"}
 
 
 @app.post("/signup")
@@ -99,6 +100,7 @@ def getUserSingle(user_id: int):
             return user
     except Exception as e:
         raise e
+
 
 # get all users
 @app.get("/getAllUsers")
