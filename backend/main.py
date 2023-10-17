@@ -42,6 +42,9 @@ async def read_root(request: Request):
 async def read_root(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+@app.get("/signup", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("sign_up.html", {"request": request})
 
 # Login route
 @app.post("/login")
