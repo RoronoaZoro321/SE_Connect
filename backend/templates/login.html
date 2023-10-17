@@ -9,9 +9,9 @@
 <body align="center">
     <div class="login_container">
         <h2>Log in</h2>
-        <form id="login-form" >
+        <form id="login-form" method="post" action="/login">
             <div class="input-group custom1">
-                <input type="text" id="username_login" name="username" placeholder="Username" required>
+                <input type="number" id="username_login" name="username" placeholder="id" required>
             </div>
             <div class="input-group custom2">
                 <input type="password" id="password_login" name="password" placeholder="Password" required>
@@ -24,7 +24,7 @@
     </div>
     <div class="to-sign-up">
         <p>Don't have an account? 
-            <span><a href="sign_up.html"> Sign up</a></span>
+            <span><a href="/signup"> Sign up</a></span>
         </p>
     </div>
     <!-- <script src="script.js"></script> -->

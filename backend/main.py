@@ -44,17 +44,17 @@ async def read_root(request: Request):
 
 @app.get("/signup", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("sign_up.html", {"request": request})
+    return templates.TemplateResponse("signup.html", {"request": request})
 
 # Login route
 @app.post("/login")
-def login(id: int = Form(...), password: str = Form(...)):
+def login(username_login: int = Form(...), password_login: str = Form(...)):
     try:
         users = root.users
         if users is None:
             raise HTTPException(status_code=400, detail="No users found")
         for user in users.values():
-            if user.student_id == id and user.password == password:
+            if user.student_id == username_login and user.password == password_login:
                 return {"message": "Login successful"}
         raise HTTPException(status_code=400, detail="Invalid credentials")
     except Exception as e:
