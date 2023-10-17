@@ -3,11 +3,11 @@ body {
 }
 
 h2 {
-    color: #F9D949;
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    color: #ffffff;
+    /* -webkit-text-stroke: 1px rgb(0, 0, 0); */
     font-size: 72px;
     margin-top: 40px;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: sans-serif;
     margin-bottom: 50px;
 }
 
@@ -30,6 +30,7 @@ input {
     font-size: 16px;
     background-color: #262b46;
     /* F45050 */
+    color: aliceblue;
     
 }
 
