@@ -43,7 +43,7 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
         username = user.get_firstname()
         return templates.TemplateResponse("home.html", {"request": request, "username": username})
     else:
-        return RedirectResponse(url="/signup")
+        return RedirectResponse(url="/login")
         
 
 
@@ -63,13 +63,16 @@ def login(response: Response, student_id: Annotated[int, Form()], password: Anno
 
     if sessionId:
         response.set_cookie(key="sessionId", value=sessionId)
+        response.status_code = 200
         return {"message": "Login successful"}
-
+    
+    response.status_code = 401
     return {"message": "Invalid credentials"}
 
 
+
 @app.post("/signup")
-def signup(id: int, username: str, firstName: str, lastName: str, password: str):
+def signup(response: Response, id: int, username: str, firstName: str, lastName: str, password: str):
     try:
         # Check for duplicate id
         if id in root.users:
