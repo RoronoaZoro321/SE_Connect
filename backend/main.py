@@ -6,7 +6,7 @@ import logging
 from fastapi import FastAPI, Request, HTTPException, Depends, Form, Response, Cookie
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from typing import Annotated
 
 from backend.core.config import settings
@@ -39,8 +39,12 @@ if not hasattr(root, "users"):
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
-    username = user.get_firstname() if user else "User"
-    return templates.TemplateResponse("home.html", {"request": request, "username": username})
+    if user:
+        username = user.get_firstname()
+        return templates.TemplateResponse("home.html", {"request": request, "username": username})
+    else:
+        return RedirectResponse(url="/signup")
+        
 
 
 @app.get("/login", response_class=HTMLResponse)
