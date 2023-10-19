@@ -13,7 +13,7 @@ from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
 from backend.services.User import UserServ
-from backend.models.LoginData import LoginData
+from backend.models.LoginData import LoginData, SignupData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -72,9 +72,13 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
     else:
         return RedirectResponse(url="/login")
 
+def get_sessionId(student_id, password):
+    sessionId = UserServ.loginUser(student_id, password, root)
+    return sessionId
+
 @app.post("/login")
 def login(response: Response, data: LoginData):
-    sessionId = UserServ.loginUser(data.student_id, data.password, root)
+    sessionId = get_sessionId(data.student_id, data.password)
     if sessionId:
         response.set_cookie(key="sessionId", value=sessionId)
         response.status_code = 200
@@ -85,19 +89,22 @@ def login(response: Response, data: LoginData):
 
 
 @app.post("/signup")
-def signup(response: Response, id: int, username: str, firstName: str, lastName: str, password: str):
+def signup(response: Response, data: SignupData):
     try:
         # Check for duplicate id
-        if id in root.users:
+        print(data.student_id)
+        if data.student_id in root.users:
             raise HTTPException(
-                status_code=400, detail="This Id already exists")
+                status_code=400, detail="This ID already exists")
         # Create a UserData object and store it in the BTrees.OOBTree
-        user = User(id, username, firstName, lastName, password)
-        root.users[id] = user
-
+        user = User(data.student_id, data.username, data.firstName, data.lastName, data.password)
+        root.users[data.student_id] = user
         # Commit the transaction
         transaction.commit()
 
+        sessionId = get_sessionId(data.student_id, data.password)
+        response.set_cookie(key="sessionId", value=sessionId)
+        response.status_code = 200
         return {"message": "User created successfully"}
     except Exception as e:
         raise e
