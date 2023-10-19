@@ -41,7 +41,7 @@ if not hasattr(root, "users"):
 async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
-        username = user.get_firstname()
+        username = user.get_username()
         return templates.TemplateResponse("home.html", {"request": request, "username": username})
     else:
         return RedirectResponse(url="/login")
