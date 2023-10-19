@@ -9,6 +9,7 @@ class User(persistent.Persistent):
         self.lastname = lastname
         self.password = password
         self.email = str(self.student_id) + "@kmitl.ac.th"
+        self.description = ""
         self.frineds = set()  # set(id, id, id) find from user_id
         self.posts = []  # [id id id ] find from post_id
 
