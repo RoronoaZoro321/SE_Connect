@@ -9,7 +9,7 @@
 <body align="center">
     <div class="login_container">
         <h2>Log in</h2>
-        <form id="login-form" method="post" action="/login">
+        <form id="login-form">
             <div class="input-group custom1">
                 <input type="number" id="student_id" name="student_id" placeholder="Student ID" required>
             </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="to-sign-up">
         <p>Don't have an account? 
-            <span><a href="/signup"> Sign up</a></span>
+            <span><a href="/user_profile"> Sign up</a></span>
         </p>
     </div>
     <script src="{{ url_for('static', path='login.js') }}"></script>

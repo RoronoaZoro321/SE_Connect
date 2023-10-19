@@ -13,6 +13,7 @@ from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
 from backend.services.User import UserServ
+from backend.models.LoginData import LoginData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -44,7 +45,6 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
         return templates.TemplateResponse("home.html", {"request": request, "username": username})
     else:
         return RedirectResponse(url="/login")
-        
 
 
 @app.get("/login", response_class=HTMLResponse)
@@ -73,17 +73,15 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
         return RedirectResponse(url="/login")
 
 @app.post("/login")
-def login(response: Response, student_id: Annotated[int, Form()], password: Annotated[str, Form()]):
-    sessionId = UserServ.loginUser(student_id, password, root)
-
+def login(response: Response, data: LoginData):
+    sessionId = UserServ.loginUser(data.student_id, data.password, root)
     if sessionId:
         response.set_cookie(key="sessionId", value=sessionId)
         response.status_code = 200
         return {"message": "Login successful"}
-    
+
     response.status_code = 401
     return {"message": "Invalid credentials"}
-
 
 
 @app.post("/signup")
