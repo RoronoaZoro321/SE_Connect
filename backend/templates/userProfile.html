@@ -18,11 +18,18 @@
     } -->
 
     <div class="user-input">
-        <p>{{ data.get("id") }}</p>
-        <!-- <p>{{data.username}}</p>
-        <p>{{data.firstName}}</p>
-        <p>{{data.lastName}}</p>
-        <p>{{data.email}}</p> -->
+        <p>id: {{ data.get("id") }}</p>
+        <p>username: {{data.username}}</p>
+        <p>first name: {{data.firstName}}</p>
+        <p>lastname: {{data.lastName}}</p>
+        <p>email: {{data.email}}</p>
+        <form>
+            <label for="">Age</label>
+            <input type="text">
+            <br>
+            <label for="">Description</label>
+            <textarea name="" id="" cols="30" rows="10" placeholder="Enter your Bio"></textarea>
+        </form>
     </div>
 </body>
 </html>

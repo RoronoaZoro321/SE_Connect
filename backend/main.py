@@ -68,7 +68,7 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
             "email": user.get_email(),
         }
         # return data
-        return templates.TemplateResponse("userProfile.html", {"request": request}, {"data": data})
+        return templates.TemplateResponse("userProfile.html", {"request": request, "data": data})
     else:
         return RedirectResponse(url="/login")
 
