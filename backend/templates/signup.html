@@ -7,9 +7,9 @@
     <title>Sign Up</title>
 </head>
 <body>
-    <div class="signup-container">
+    <div class="signup-form">
         <h2>Sign Up</h2>
-        <form>
+        <form id="signup-form_">
             <div class="form-group">
                 <input type="text" id="id" name="id" placeholder="Student ID" required>
             </div>
@@ -27,7 +27,8 @@
             </div>
             <button type="submit">Register</button>
         </form>
+        <h4 id="error-message" style="color: red;"></h4>
     </div>
-    <script src="{{ url_for('static', path='signup.js') }}"></script>
+    <script src="{{ url_for('static', path='signUp.js') }}"></script>
 </body>
 </html>
