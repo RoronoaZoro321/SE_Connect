@@ -51,7 +51,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     
         if (response.ok) {
           // Login was successful, redirect to the /home page
-          window.location.href = '/home'; // Change to the correct URL
+          window.location.href = '/'; // Change to the correct URL
         } else {
           // Handle unsuccessful login, e.g., display an error message
           document.getElementById('error-message').innerText = 'Login failed';
