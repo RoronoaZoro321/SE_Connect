@@ -3,33 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', path='style.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ url_for('static', path='user_profile.css') }}" rel="stylesheet" type="text/css" >
     <title>User Profile</title>
 </head>
 <body>
-    <h1>User Profile</h1>
+    <div class="user">
+        <div class="user-container">
+            <h1>User Profile</h1>
 
-    <!-- data = {
-        "id": user.get_id(),
-        "username": user.get_username(),
-        "firstName": user.get_firstname(),
-        "lastName": user.get_lastname(),
-        "email": user.get_email(),
-    } -->
+            <!-- data = {
+                "id": user.get_id(),
+                "username": user.get_username(),
+                "firstName": user.get_firstname(),
+                "lastName": user.get_lastname(),
+                "email": user.get_email(),
+            } -->
 
-    <div class="user-input">
-        <p>id: {{ data.get("id") }}</p>
-        <p>username: {{data.username}}</p>
-        <p>first name: {{data.firstName}}</p>
-        <p>lastname: {{data.lastName}}</p>
-        <p>email: {{data.email}}</p>
-        <form>
-            <label for="">Age</label>
-            <input type="text">
-            <br>
-            <label for="">Description</label>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Enter your Bio"></textarea>
-        </form>
+            <div class="user-input">
+                <div class="row">
+                    <label class="name_label">Name</label>
+                    <div class="name_box">{{data.firstName}}</div>
+                    <label class="surname_label">Surname</label>
+                    <div class="surname_box"> {{data.lastName}}</div>
+                </div>
+                <div class="row">
+                    <label class="username_label">Username</label>
+                    <div class="username_box">{{data.username}}</div>
+                    <label class="id_label">ID</label>
+                    <div class="id_box">{{ data.get("id") }}</div>
+                </div>
+                <div class="row">
+                    <label class="email_label">Email</label>
+                    <div class="email_box">{{data.email}}</div>
+                </div>
+                <form class="row">
+                    <label class="age_label" for="">Age</label>
+                    <input type="number">
+                    <br>
+                    <label class="description_label" for="">Description</label>
+                    <textarea class="description" name="" id="" cols="30" rows="10" placeholder="Enter your Bio"></textarea>
+                </form>
+            </div>
+        </div>
+        <div class="save">
+            <button>save</button>
+        </div>
     </div>
 </body>
 </html>
