@@ -8,6 +8,7 @@ class User(persistent.Persistent):
         self.firstname = firstname
         self.lastname = lastname
         self.password = password
+        self.email = str(self.student_id) + "@kmitl.ac.th"
         self.frineds = set()  # set(id, id, id) find from user_id
         self.posts = []  # [id id id ] find from post_id
 
@@ -43,6 +44,9 @@ class User(persistent.Persistent):
 
     def get_password(self):
         return self.password
+    
+    def get_email(self):
+        return self.email
 
 
 class Post(persistent.Persistent):

@@ -56,6 +56,21 @@ async def read_root(request: Request):
 async def read_root(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
+@app.get("/userProfile" , response_class=HTMLResponse)
+def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        data = {
+            "id": user.get_student_id(),
+            "username": user.get_username(),
+            "firstName": user.get_firstname(),
+            "lastName": user.get_lastname(),
+            "email": user.get_email(),
+        }
+        # return data
+        return templates.TemplateResponse("userProfile.html", {"request": request}, {"data": data})
+    else:
+        return RedirectResponse(url="/login")
 
 @app.post("/login")
 def login(response: Response, student_id: Annotated[int, Form()], password: Annotated[str, Form()]):
@@ -158,6 +173,7 @@ def updateUser(user_id: int, username: str, firstName: str, lastName: str, passw
         return {"message": "User updated successfully"}
     except Exception as e:
         raise e
+
 
 
 # Close the database connection when the application stops
