@@ -31,6 +31,12 @@ class User(persistent.Persistent):
     def set_password(self, password: str):
         self.password = password
 
+    def set_age(self, age: int):
+        self.age = age
+    
+    def set_description(self, description: str):
+        self.description = description
+
     def get_student_id(self):
         return self.student_id
 
@@ -48,6 +54,13 @@ class User(persistent.Persistent):
     
     def get_email(self):
         return self.email
+
+    def get_age(self):
+        return self.age
+    
+    def get_description(self):
+        return self.description
+    
 
 
 class Post(persistent.Persistent):

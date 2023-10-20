@@ -3,7 +3,7 @@ console.log('login.js loaded');
 document.getElementById('login-form').addEventListener('submit', async (event) => {
     event.preventDefault();
   
-    let studentId = parseInt(document.getElementById('student_id').value);
+    const studentId = parseInt(document.getElementById('student_id').value);
     const password = document.getElementById('password').value;
 
     const data = {

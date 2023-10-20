@@ -30,24 +30,29 @@
                     <label class="username_label">Username</label>
                     <div class="username_box">{{data.username}}</div>
                     <label class="id_label">ID</label>
-                    <div class="id_box">{{ data.get("id") }}</div>
+                    <div class="id_box">{{ data.id }}</div>
                 </div>
                 <div class="row">
                     <label class="email_label">Email</label>
                     <div class="email_box">{{data.email}}</div>
                 </div>
-                <form class="row">
-                    <label class="age_label" for="">Age</label>
-                    <input type="number">
+                <form class="row" id="userProfileForm">
+                    <label class="age_label" for="age">Age</label>
+                    <input type="number" id="age" name="age" value="{{ data.age }}" required>
                     <br>
                     <label class="description_label" for="">Description</label>
-                    <textarea class="description" name="" id="" cols="30" rows="10" placeholder="Enter your Bio"></textarea>
+                    <textarea class="description" name="description" id="description"
+                    cols="30" rows="10" placeholder="Enter your Bio" required>{{ data.description }}</textarea>
+                    <button type="submit">Save</button>
                 </form>
+                <!-- <div class="save">
+                    <button>save</button>
+                </div> -->
+                <h4 id="error-message" style="color: red;"></h4>
+                <h4 id="done-message" style="color: greenyellow;"></h4>
             </div>
         </div>
-        <div class="save">
-            <button>save</button>
-        </div>
     </div>
+    <script src="{{ url_for('static', path='userProfile.js') }}"></script>
 </body>
 </html>

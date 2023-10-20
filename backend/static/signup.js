@@ -3,7 +3,7 @@ console.log('signUp.js loaded');
 document.getElementById('signup-form_').addEventListener('submit', async (event) => {
     event.preventDefault();
   
-    let studentId = parseInt(document.getElementById('id').value);
+    const studentId = parseInt(document.getElementById('id').value);
     const username = document.getElementById('username').value;
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;

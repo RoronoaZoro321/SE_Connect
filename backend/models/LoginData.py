@@ -10,3 +10,7 @@ class SignupData(BaseModel):
     firstName: str
     lastName: str
     password: str
+
+class UserProfileData(BaseModel):
+    age: int
+    description: str
