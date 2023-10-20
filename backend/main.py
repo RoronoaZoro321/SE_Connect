@@ -13,7 +13,7 @@ from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
 from backend.services.User import UserServ
-from backend.models.LoginData import LoginData, SignupData
+from backend.models.base import LoginData, SignupData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
