@@ -14,3 +14,6 @@ class SignupData(BaseModel):
 class UserProfileData(BaseModel):
     age: int
     description: str
+
+class PostData(BaseModel):
+    content: str

@@ -11,9 +11,10 @@ from typing import Annotated
 
 from backend.core.config import settings
 from backend.apis.base import api_router
-from backend.db.models import User
+from backend.db.models import User, Post
 from backend.services.User import UserServ
-from backend.models.base import LoginData, SignupData, UserProfileData
+from backend.services.Post import PostServ
+from backend.models.base import LoginData, SignupData, UserProfileData, PostData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -30,10 +31,18 @@ db = ZODB.DB(storage)
 connection = db.open()
 root = connection.root()
 
-# Use BTrees.OOBTree to store users
-print(hasattr(root, "users"))
+# Use BTrees.OOBTree to store users and posts
+print("Has users", hasattr(root, "users"))
+print("Has posts", hasattr(root, "posts"))
 if not hasattr(root, "users"):
     root.users = BTrees.OOBTree.BTree()
+if not hasattr(root, "posts"):
+    root.posts = BTrees.OOBTree.BTree()
+
+# Create or update post id count
+print("Current post ID", root.post_id_count if hasattr(root, "post_id_count") else None)
+if not hasattr(root, "post_id_count"):
+    root.post_id_count = 0
 
 
 # Home route
@@ -57,6 +66,13 @@ async def read_root(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
 
+@app.get("/se_community", response_class=HTMLResponse)
+async def read_root(request: Request):
+    posts = PostServ.getPosts(root)
+    print(type(posts), posts, "Posts")
+    return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts})
+
+
 @app.get("/userProfile", response_class=HTMLResponse)
 def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
@@ -76,6 +92,41 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
         return RedirectResponse(url="/login")
 
 
+@app.post("/newPost")
+def createPost(response: Response, content: str, sessionId: Annotated[str | None, Cookie()] = None):
+    try:
+        
+        user = UserServ.getUserFromSession(sessionId, root)
+        if user:
+            user_id = user.student_id
+            post_id = root.post_id_count
+            root.post_id_count += 1
+
+            # Check for duplicate id
+            if post_id in root.posts:
+                raise HTTPException(
+                    status_code=400, detail="This ID already exists")
+            
+            new_post = Post(post_id, user_id, content)
+            user.add_post(new_post)
+            root.posts[post_id] = new_post
+            transaction.commit()
+
+            response.status_code = 200
+            return {"message": "Post created successfully"}
+        else:
+            response.status_code = 404
+            return {"message": "User not found"}
+    except Exception as e:
+        raise e
+
+
+# Debug
+@app.get("/clearPosts")
+def clearPosts():
+    root.posts = BTrees.OOBTree.BTree()
+
+
 @app.post("/userProfile")
 def updateProfile(response: Response, data: UserProfileData, sessionId: Annotated[str | None, Cookie()] = None):
     print(data)
@@ -88,8 +139,8 @@ def updateProfile(response: Response, data: UserProfileData, sessionId: Annotate
         response.status_code = 200
         return {"message": "User profile updated successfully"}
     else:
-        response.status_code = 401
-        return {"message": "Invalid credentials"}
+        response.status_code = 404
+        return {"message": "User not found"}
 
 
 @app.post("/login")
@@ -125,6 +176,17 @@ def signup(response: Response, data: SignupData):
         return {"message": "User created successfully"}
     except Exception as e:
         raise e
+
+
+@app.get("/getAllPosts")
+def getAllPosts():
+    try:
+        posts = root.posts
+        if posts is None:
+            raise HTTPException(status_code=400, detail="No posts found")
+        return posts
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # get single user

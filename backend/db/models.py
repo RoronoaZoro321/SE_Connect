@@ -38,6 +38,10 @@ class User(persistent.Persistent):
     def set_description(self, description: str):
         self.description = description
 
+    def add_post(self, post):
+        self.posts.append(post)
+        self._p_changed = True
+
     def get_student_id(self):
         return self.student_id
 
@@ -75,6 +79,10 @@ class User(persistent.Persistent):
             return True
         else:
             return False
+        
+    def get_posts(self):
+        return self.posts
+    
 
 
 class Post(persistent.Persistent):
