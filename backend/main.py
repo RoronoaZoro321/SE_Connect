@@ -83,8 +83,8 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
             "firstName": user.get_firstname(),
             "lastName": user.get_lastname(),
             "email": user.get_email(),
-            "age": user.get_age(),
-            "description": user.get_description()
+            # "age": user.get_age(),
+            # "description": user.get_description()
         }
         # return data
         return templates.TemplateResponse("userProfile.html", {"request": request, "data": data})

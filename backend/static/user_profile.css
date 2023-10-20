@@ -114,11 +114,11 @@ input[type=number] {
     border-radius: 5px;
 }
 
-.save button{
+button{
     background-color: #262b46;
     width: 115px;
     height: 50px;
-    font-size: 22px;
+    font-size: 30px;
     position: relative;
     bottom: 10;
     color: #ffffffc8;
