@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', path='se_community.css') }}" rel="stylesheet" type="text/css" >
+    <title>SE_Community</title>
+</head>
+<body>
+    <h1>Posts</h1>
+    {% for post in posts %}
+        <div class="post">
+            <p>{{ post.user_id }}</p>
+            <p>{{ post.content }}</p>
+        </div>
+    {% endfor %}
+    <script src="{{ url_for('static', path='se_community.js') }}"></script>
+</body>
+</html>
