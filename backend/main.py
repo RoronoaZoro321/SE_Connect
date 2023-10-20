@@ -13,7 +13,7 @@ from backend.core.config import settings
 from backend.apis.base import api_router
 from backend.db.models import User
 from backend.services.User import UserServ
-from backend.models.LoginData import LoginData, SignupData, UserProfileData
+from backend.models.base import LoginData, SignupData, UserProfileData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -75,6 +75,7 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
     else:
         return RedirectResponse(url="/login")
 
+
 @app.post("/userProfile")
 def updateProfile(response: Response, data: UserProfileData, sessionId: Annotated[str | None, Cookie()] = None):
     print(data)
@@ -90,9 +91,6 @@ def updateProfile(response: Response, data: UserProfileData, sessionId: Annotate
         response.status_code = 401
         return {"message": "Invalid credentials"}
 
-def get_sessionId(student_id, password):
-    sessionId = UserServ.loginUser(student_id, password, root)
-    return sessionId
 
 @app.post("/login")
 def login(response: Response, data: LoginData):
