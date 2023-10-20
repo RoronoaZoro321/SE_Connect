@@ -114,16 +114,25 @@ input[type=number] {
     border-radius: 5px;
 }
 
-.save button{
-    background-color: #262b46;
-    width: 115px;
-    height: 50px;
-    font-size: 22px;
-    position: relative;
-    bottom: 10;
-    color: #ffffffc8;
-    margin-left: 900px;
+.row button {
+    background-color: #2c354f;
+    color: #fffffc;
+    padding: 10px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 627px;
+    margin-top: 10px;
     border-radius: 10px;
 }
+
+.row button:hover {
+    background-color: #181d2b;
+}
+
+.row h4 {
+    text-align: center;
+}
+
 
 

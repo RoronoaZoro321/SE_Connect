@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='signup.css') }}">
     <title>Sign Up</title>
 </head>
 <body>
@@ -27,8 +27,8 @@
             </div>
             <button type="submit">Register</button>
         </form>
-        <h4 id="error-message" style="color: red;"></h4>
     </div>
+    <h4 id="error-message" style="color: #F45050; text-align=center;"></h4>
     <script src="{{ url_for('static', path='signUp.js') }}"></script>
 </body>
 </html>
