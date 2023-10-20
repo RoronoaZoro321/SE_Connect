@@ -56,7 +56,8 @@ async def read_root(request: Request):
 async def read_root(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
 
-@app.get("/userProfile" , response_class=HTMLResponse)
+
+@app.get("/userProfile", response_class=HTMLResponse)
 def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
@@ -95,7 +96,7 @@ def get_sessionId(student_id, password):
 
 @app.post("/login")
 def login(response: Response, data: LoginData):
-    sessionId = get_sessionId(data.student_id, data.password)
+    sessionId = UserServ.loginUser(data.student_id, data.password, root)
     if sessionId:
         response.set_cookie(key="sessionId", value=sessionId)
         response.status_code = 200
@@ -114,12 +115,13 @@ def signup(response: Response, data: SignupData):
             raise HTTPException(
                 status_code=400, detail="This ID already exists")
         # Create a UserData object and store it in the BTrees.OOBTree
-        user = User(data.student_id, data.username, data.firstName, data.lastName, data.password)
+        user = User(data.student_id, data.username,
+                    data.firstName, data.lastName, data.password)
         root.users[data.student_id] = user
         # Commit the transaction
         transaction.commit()
 
-        sessionId = get_sessionId(data.student_id, data.password)
+        sessionId = UserServ.loginUser(data.student_id, data.password, root)
         response.set_cookie(key="sessionId", value=sessionId)
         response.status_code = 200
         return {"message": "User created successfully"}
@@ -195,7 +197,6 @@ def updateUser(user_id: int, username: str, firstName: str, lastName: str, passw
         return {"message": "User updated successfully"}
     except Exception as e:
         raise e
-
 
 
 # Close the database connection when the application stops
