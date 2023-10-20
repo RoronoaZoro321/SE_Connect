@@ -14,7 +14,7 @@ from backend.apis.base import api_router
 from backend.db.models import User, Post
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
-from backend.models.base import LoginData, SignupData, UserProfileData, PostData
+from backend.models.base import LoginData, SignupData, UserProfileData, PostData, AddFriendData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -269,15 +269,15 @@ def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
             friends.append(root.users[i].get_username())
         return templates.TemplateResponse("friends.html", {"request": request, "friends": friends})
 
-@app.post("/addFreind")
-def addFriend(response: Response, friend_id: int, sessionId: Annotated[str | None, Cookie()] = None):
+@app.post("/add_friend")
+def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
-        if friend_id not in root.users:
+        if data.friend_id not in root.users:
             response.status_code = 400
             return {"message": "No user found for this id"}
         else:
-            if(user.add_friend(friend_id)):
+            if(user.add_friend(data.friend_id)):
                 transaction.commit()
                 response.status_code = 200
                 return {"message": "Friend added successfully"}
