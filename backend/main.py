@@ -195,7 +195,34 @@ def updateUser(user_id: int, username: str, firstName: str, lastName: str, passw
         return {"message": "User updated successfully"}
     except Exception as e:
         raise e
+    
 
+@app.get("/friends", response_class=HTMLResponse)
+def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        friends_id = user.get_friends()
+        friends = []
+        for i in friends_id:
+            friends.append(root.users[i].get_username())
+        return templates.TemplateResponse("friends.html", {"request": request, "friends": friends})
+
+@app.post("/addFreind")
+def addFriend(response: Response, friend_id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        if friend_id not in root.users:
+            response.status_code = 400
+            return {"message": "No user found for this id"}
+        else:
+            if(user.add_friend(friend_id)):
+                transaction.commit()
+                response.status_code = 200
+                return {"message": "Friend added successfully"}
+            return {"message": "Friend already added"}
+    else:
+        response.status_code = 401
+        return {"message": "Invalid credentials"}
 
 # Close the database connection when the application stops
 @app.on_event("shutdown")

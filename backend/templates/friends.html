@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freinds</title>
+</head>
+<body>
+    <h1>My Freinds List</h1>
+    
+    <div id="friend_list">
+        <ul>
+            {% for friend in friends %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <script src="{{ url_for('static', path='friends.js') }}"></script>
+</body>
+</html>

@@ -62,6 +62,19 @@ class User(persistent.Persistent):
     def get_description(self):
         return self.description
     
+    def get_friends(self):
+        return self.friends
+    
+    def add_friend(self, friend_id: int):
+        if friend_id not in self.friends:
+            temp = self.friends
+            temp.add(friend_id)
+            self.friends = set()
+            for i in temp:
+                self.friends.add(i)
+            return True
+        else:
+            return False
 
 
 class Post(persistent.Persistent):
