@@ -12,6 +12,7 @@ class User(persistent.Persistent):
         self.description = ""
         self.friends = set()  # set(id, id, id) find from user_id
         self.posts = []  # [id id id ] find from post_id
+        self.age = 0
 
     def __str__(self):
         return f"User: {self.username} {self.firstname} {self.lastname} {self.password}"
