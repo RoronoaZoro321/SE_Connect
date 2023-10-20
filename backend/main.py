@@ -75,6 +75,7 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
     else:
         return RedirectResponse(url="/login")
 
+
 @app.post("/userProfile")
 def updateProfile(response: Response, data: UserProfileData, sessionId: Annotated[str | None, Cookie()] = None):
     print(data)
@@ -90,9 +91,6 @@ def updateProfile(response: Response, data: UserProfileData, sessionId: Annotate
         response.status_code = 401
         return {"message": "Invalid credentials"}
 
-def get_sessionId(student_id, password):
-    sessionId = UserServ.loginUser(student_id, password, root)
-    return sessionId
 
 @app.post("/login")
 def login(response: Response, data: LoginData):
