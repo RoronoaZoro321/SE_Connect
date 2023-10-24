@@ -1,69 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css" >
-    <title>Responsive Navbar</title>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 </head>
-
-<body>
-    <!-- <h2>Hi {{username}}</h2> -->
-    <!-- <h3>Welcome to SE Connect</h3> -->
-    <header>
-        <div class="container">
-            <div class="logo-container">
-                <h3 class="logo">SE<span>Connect</span></h3>
-            </div>
-
-            <div class="nav-btn">
-                <div class="nav-links">
-                    <ul>
-                        <li class="nav-link" style="--i: .6s">
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="nav-link" style="--i: .85s">
-                            <a href="#">Menu<i class="fas fa-caret-down"></i></a>
-                            <div class="dropdown">
-                                <ul>
-                                    <li class="dropdown-link">
-                                        <a href="/friends">Friends</a>
-                                    </li>
-                                    <li class="dropdown-link">
-                                        <a href="/se_community">SE Community</a>
-                                    </li>
-                                </ul>
-                            </div> 
-                        </li>
-                        <li class="nav-link" style="--i: 1.1s">
-                            <a href="#">About<i class="fas fa-caret-down"></i></a>
-                            <div class="dropdown">
-                                <ul>
-                                    <li class="dropdown-link">
-                                        <a href="/userProfile">User Profile</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="log-sign" style="--i: 1.8s">
-                    <a href="/login" class="btn transparent">Log in</a>
-                    <a href="/signup" class="btn solid">Sign up</a>
-                </div>
-            </div>
-        </div>
-    </header>
-    <main>
-        <section>
-            <div class="overlay"></div>
-        </section>
-    </main>
-    <!-- <p><a href="/se_community">SE_community</a></p> -->
-
-</body>
-
-</html>

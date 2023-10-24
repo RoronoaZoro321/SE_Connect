@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <title>SEConnect</title>
+    {% endblock %}
+</head>
+
+<body>
+    {% block header %}
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <h3 class="logo">SE<span>Connect</span></h3>
+            </div>
+
+            <div class="nav-btn">
+                <div class="nav-links">
+                    <ul>
+                        <li class="nav-link" style="--i: .6s">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="nav-link" style="--i: .85s">
+                            <a href="#">Menu<i class="fas fa-caret-down"></i></a>
+                            <div class="dropdown">
+                                <ul>
+                                    <li class="dropdown-link">
+                                        <a href="/friends">Friends</a>
+                                    </li>
+                                    <li class="dropdown-link">
+                                        <a href="/se_community">SE Community</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-link" style="--i: 1.1s">
+                            <a href="#">About<i class="fas fa-caret-down"></i></a>
+                            <div class="dropdown">
+                                <ul>
+                                    <li class="dropdown-link">
+                                        <a href="/userProfile">User Profile</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="log-sign" style="--i: 1.8s">
+                    <a href="/login" class="btn transparent">Log in</a>
+                    <a href="/signup" class="btn solid">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    <!-- {% block overlay %} -->
+    <main>
+        <section>
+            <div class="overlay">{% block content %}{% endblock %}</div>
+        </section>
+    </main>
+    <!-- {% endblock %} -->
+</body>
+
+</html>

@@ -1,19 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', path='se_community.css') }}" rel="stylesheet" type="text/css" >
-    <title>SE_Community</title>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', path='se_community.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 </head>
+
 <body>
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+
+    {% block overlay %}
+    {{ super() }}
+    {% endblock %}
+
+    {% block content %}
     <h1>Posts</h1>
+    <br>
     {% for post in posts %}
-        <div class="post">
-            <p>{{ post.user_id }}</p>
-            <p>{{ post.content }}</p>
-        </div>
+    <div class="post">
+        <p>{{ post.get_username() }}: {{ post.get_content() }}</p>
+        <p>Likes: {{ post.get_likes_count() }} <button id="like">Like</button></p>
+        <p>Comments: <button id="comment">Comment</button></p>
+        {% for comment in post.get_comments() %}
+        <p> {{ comment.username }}: {{ comment.comment }}</p>
+        {% endfor %}
+    </div>
+    <br>
     {% endfor %}
     <script src="{{ url_for('static', path='se_community.js') }}"></script>
+    {% endblock %}
 </body>
+
 </html>

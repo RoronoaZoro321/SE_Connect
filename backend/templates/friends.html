@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freinds</title>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', path='friends.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 </head>
+
 <body>
-    <h1>My Freinds List</h1>
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
     
+    {% block overlay %}
+    {{ super() }}
+    {% endblock %}
+    
+    {% block content %}
+    <h1>My Friends List</h1>
+
     <div id="friend_list">
         <ul>
             {% for friend in friends %}
-                <li>{{ friend }}</li>
+            <li>{{ friend }}</li>
             {% endfor %}
         </ul>
     </div>
@@ -28,7 +40,9 @@
         <h4 id="error-message" style="color: red;"></h4>
         <h4 id="done-message" style="color: greenyellow;"></h4>
     </div>
-    
+
     <script src="{{ url_for('static', path='friends.js') }}"></script>
+    {% endblock %}
 </body>
+
 </html>

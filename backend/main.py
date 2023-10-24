@@ -14,7 +14,7 @@ from backend.apis.base import api_router
 from backend.db.models import User, Post
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
-from backend.models.base import LoginData, SignupData, UserProfileData, PostData, AddFriendData
+from backend.models.base import CommentData, LoginData, SignupData, UserProfileData, AddFriendData, PostInteractData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -40,7 +40,8 @@ if not hasattr(root, "posts"):
     root.posts = BTrees.OOBTree.BTree()
 
 # Create or update post id count
-print("Current post ID", root.post_id_count if hasattr(root, "post_id_count") else None)
+print("Current post ID", root.post_id_count if hasattr(
+    root, "post_id_count") else None)
 if not hasattr(root, "post_id_count"):
     root.post_id_count = 0
 
@@ -67,10 +68,13 @@ async def read_root(request: Request):
 
 
 @app.get("/se_community", response_class=HTMLResponse)
-async def read_root(request: Request):
-    posts = PostServ.getPosts(root)
-    print(type(posts), posts, "Posts")
-    return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts})
+async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        posts = PostServ.getPosts(root)
+        return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts})
+    else:
+        return RedirectResponse(url="/login")
 
 
 @app.get("/userProfile", response_class=HTMLResponse)
@@ -95,10 +99,11 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
 @app.post("/newPost")
 def createPost(response: Response, content: str, sessionId: Annotated[str | None, Cookie()] = None):
     try:
-        
+
         user = UserServ.getUserFromSession(sessionId, root)
         if user:
-            user_id = user.student_id
+            user_id = user.get_student_id()
+            username = user.get_username()
             post_id = root.post_id_count
             root.post_id_count += 1
 
@@ -106,8 +111,8 @@ def createPost(response: Response, content: str, sessionId: Annotated[str | None
             if post_id in root.posts:
                 raise HTTPException(
                     status_code=400, detail="This ID already exists")
-            
-            new_post = Post(post_id, user_id, content)
+
+            new_post = Post(post_id, user_id, username, content)
             user.add_post(new_post)
             root.posts[post_id] = new_post
             transaction.commit()
@@ -121,10 +126,47 @@ def createPost(response: Response, content: str, sessionId: Annotated[str | None
         raise e
 
 
+@app.post("/api/like")
+def like(postInteractData: PostInteractData):
+    post_id = postInteractData.post_id
+    post = PostServ.getPostFromID(post_id, root)
+
+    if post:
+        minimal_user = {"studentId": postInteractData.student_id,
+                        "username": postInteractData.username}
+        post.add_like(minimal_user)
+        return {"Success": "Liked post successfully"}
+    else:
+        return {"Error": "Post not found"}
+
+
+@app.post("/api/comment")
+def comment(postInteractData: PostInteractData, comment: CommentData):
+    post_id = postInteractData.post_id
+    post = PostServ.getPostFromID(post_id, root)
+
+    if post:
+        minimal_user = {"studentId": postInteractData.student_id,
+                        "username": postInteractData.username}
+        post.add_comment(minimal_user, comment)
+        return {"Success": "Commented on post successfully"}
+    else:
+        return {"Error": "Post not found"}
+
 # Debug
+
+
 @app.get("/clearPosts")
 def clearPosts():
     root.posts = BTrees.OOBTree.BTree()
+    root.post_id_count = 0
+    return {"Success": "Cleared posts successfully"}
+
+
+@app.get("/clearUsers")
+def clearUsers():
+    root.users = BTrees.OOBTree.BTree()
+    return {"Success": "Cleared users successfully"}
 
 
 @app.post("/userProfile")
@@ -257,7 +299,7 @@ def updateUser(user_id: int, username: str, firstName: str, lastName: str, passw
         return {"message": "User updated successfully"}
     except Exception as e:
         raise e
-    
+
 
 @app.get("/friends", response_class=HTMLResponse)
 def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
@@ -269,6 +311,7 @@ def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
             friends.append(root.users[i].get_username())
         return templates.TemplateResponse("friends.html", {"request": request, "friends": friends})
 
+
 @app.post("/add_friend")
 def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
@@ -277,7 +320,7 @@ def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str 
             response.status_code = 400
             return {"message": "No user found for this id"}
         else:
-            if(user.add_friend(data.friend_id)):
+            if (user.add_friend(data.friend_id)):
                 transaction.commit()
                 response.status_code = 200
                 return {"message": "Friend added successfully"}
@@ -286,7 +329,20 @@ def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str 
         response.status_code = 401
         return {"message": "Invalid credentials"}
 
+
+@app.get("/logout")
+def logout(sessionId: Annotated[str | None, Cookie()] = None):
+    if sessionId:
+        new_response = RedirectResponse(url="/login")
+        new_response.delete_cookie(key="sessionId")
+        return new_response
+    else:
+        return RedirectResponse(url="/login")
+
+
 # Close the database connection when the application stops
+
+
 @app.on_event("shutdown")
 async def shutdown():
     transaction.commit()
