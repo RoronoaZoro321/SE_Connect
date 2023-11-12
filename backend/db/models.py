@@ -10,7 +10,7 @@ class User(persistent.Persistent):
         self.password = password
         self.email = str(self.student_id) + "@kmitl.ac.th"
         self.description = ""
-        self.friends = set()  # set(id, id, id) find from user_id
+        self.friends = []  # list[id, id, id] find from user_id
         self.posts = []  # [id id id ] find from post_id
         self.age = 0
 
@@ -71,11 +71,16 @@ class User(persistent.Persistent):
 
     def add_friend(self, friend_id: int):
         if friend_id not in self.friends:
-            temp = self.friends
-            temp.add(friend_id)
-            self.friends = set()
-            for i in temp:
-                self.friends.add(i)
+            self.friends.append(friend_id)
+            self._p_changed = True
+            return True
+        else:
+            return False
+
+    def remove_friend(self, friend_id: int):
+        if friend_id in self.friends:
+            self.friends.remove(friend_id)
+            self._p_changed = True
             return True
         else:
             return False

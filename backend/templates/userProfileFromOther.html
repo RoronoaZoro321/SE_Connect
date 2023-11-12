@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', path='user_profile.css') }}" rel="stylesheet" type="text/css" >
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="user">
+        <div class="user-container">
+            <h1>User Profile</h1>
+
+            <!-- data = {
+                "id": user.get_id(),
+                "username": user.get_username(),
+                "firstName": user.get_firstname(),
+                "lastName": user.get_lastname(),
+                "email": user.get_email(),
+            } -->
+
+            <div class="user-input">
+                <div class="row">
+                    <label class="name_label">Name</label>
+                    <div class="name_box">{{data.firstName}}</div>
+                    <label class="surname_label">Surname</label>
+                    <div class="surname_box"> {{data.lastName}}</div>
+                </div>
+                <div class="row">
+                    <label class="username_label">Username</label>
+                    <div class="username_box">{{data.username}}</div>
+                    <label class="id_label">ID</label>
+                    <div class="id_box">{{ data.id }}</div>
+                </div>
+                <div class="row">
+                    <label class="email_label">Email</label>
+                    <div class="email_box">{{data.email}}</div>
+                </div>
+                <div class="row">
+                    <label class="username_label">Age</label>
+                    <div class="username_box">{{data.age}}</div>
+                    <label class="id_label">Description</label>
+                    <div class="id_box">{{ data.description }}</div>
+                </div>
+                <div class="displayMessage">
+                    <h4 id="error-message" style="color: red;"></h4>
+                    <h4 id="done-message" style="color: greenyellow;"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', path='userProfile.js') }}"></script>
+</body>
+</html>
