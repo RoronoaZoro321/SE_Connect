@@ -46,25 +46,25 @@ if not hasattr(root, "post_id_count"):
     root.post_id_count = 0
 
 
+
 # Home route
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         username = user.get_username()
-        return templates.TemplateResponse("home.html", {"request": request, "username": username})
+        return templates.TemplateResponse("home.html", {"request": request,"authenticated": True, "username": username})
     else:
-        return RedirectResponse(url="/login")
-
+        return templates.TemplateResponse("home.html", {"request": request,"authenticated": False})
 
 @app.get("/login", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse("login.html", {"request": request,"authenticated": True})
 
 
 @app.get("/signup", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
+    return templates.TemplateResponse("signup.html", {"request": request,"authenticated": True})
 
 
 @app.get("/se_community", response_class=HTMLResponse)
@@ -72,7 +72,7 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         posts = PostServ.getPosts(root)
-        return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts})
+        return templates.TemplateResponse("se_community.html", {"request": request,"authenticated": True, "posts": posts})
     else:
         return RedirectResponse(url="/login")
 
@@ -91,9 +91,9 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
             "description": user.get_description()
         }
         # return data
-        return templates.TemplateResponse("userProfile.html", {"request": request, "data": data})
+        return templates.TemplateResponse("userProfile.html", {"request": request,"authenticated": True, "data": data})
     else:
-        return RedirectResponse(url="/login")
+        return RedirectResponse(url="/login") 
     
 @app.get("/userProfileFromOther/{id}", response_class=HTMLResponse)
 def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str | None, Cookie()] = None):
@@ -110,7 +110,7 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
                 "age": otherUser.get_age(),
                 "description": otherUser.get_description()
             }
-            return templates.TemplateResponse("userProfileFromOther.html", {"request": request, "data": data})
+            return templates.TemplateResponse("userProfileFromOther.html", {"request": request,"authenticated": True, "data": data})
         else:
             return RedirectResponse(url="/")
     else:
@@ -336,7 +336,7 @@ def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
             "friends_id": friends_id
         }
         print(data)
-        return templates.TemplateResponse("friends.html", {"request": request, "data": data})
+        return templates.TemplateResponse("friends.html", {"request": request, "authenticated": True, "data": data})
     else:
         return RedirectResponse(url="/login")
 

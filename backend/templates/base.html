@@ -50,10 +50,16 @@
                         </li>
                     </ul>
                 </div>
+                {% if authenticated==True %}
+                <div class="log-sign">
+                    <a href="/logout" class="btn transparent">Log out</a>
+                </div>
+                {% else %}
                 <div class="log-sign">
                     <a href="/login" class="btn transparent">Log in</a>
                     <a href="/signup" class="btn solid">Sign up</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </header>
