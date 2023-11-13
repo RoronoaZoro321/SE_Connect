@@ -1,5 +1,5 @@
 body {
-    background: #3C486B;
+    background-color: #FCF5ED;
 }
 
 h2 {
@@ -12,7 +12,7 @@ h2 {
 }
 
 .login_container {
-    background: #6b78a181;
+    background: #FCF5ED;
     width: 40%;
     margin: 0 auto;
     margin-top: 10%;

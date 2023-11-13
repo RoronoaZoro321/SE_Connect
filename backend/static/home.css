@@ -22,7 +22,7 @@ a{
 header{
     position: sticky;
     top: 0px;
-    background-color: #3C486B;
+    background-color: #1F1717;
     width: 100%;
     height: 100px;
     z-index: 1000;
@@ -44,7 +44,7 @@ section{
     top: 0;
     left: 0;
     /* background-color: rgb(56, 165, 238, 0.5); */
-    background-color: #262b46;
+    background-color: #FCF5ED;
 }
 
 .container{
@@ -80,7 +80,7 @@ section{
 }
 
 .logo{
-    color: #fff;
+    color: #FCF5ED;
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: 2px;
@@ -96,7 +96,7 @@ section{
     display: inline-block;
     padding: .5rem 1.3rem;
     font-size: 1.0rem;
-    border: 2px solid #fff;
+    border: 2px solid #FCF5ED;
     border-radius: 2rem;
     line-height: 1;
     margin: 0 .2rem;
@@ -105,13 +105,13 @@ section{
 }
 
 .btn.solid, .btn.transparent:hover{
-    background-color: #fff;
-    color: #69bde7;
+    background-color: #FCF5ED;
+    color: #CE5A67;
 }
 
 .btn.transparent, .btn.solid:hover{
     background-color: transparent;
-    color: #fff;
+    color: #FCF5ED;
 }
 
 .nav-links > ul{
@@ -126,7 +126,7 @@ section{
 
 .nav-link > a{
     line-height: 3rem;
-    color: #fff;
+    color: #FCF5ED;
     padding: 0 .8rem;
     letter-spacing: 1px;
     font-size: .95rem;
@@ -161,22 +161,24 @@ section{
 
 .dropdown-link > a{
     display: flex;
-    background-color: #fff;
-    color: #3C486B;
+    background-color: #FCF5ED;
+    color: #1F1717;
     padding: .5rem 1rem;
     font-size: .9rem;
     align-items: center;
     justify-content: space-between;
     transition: .3s;
+    border: solid 1px #1F1717;
+    border-collapse: collapse;
 }
 
 .dropdown-link:hover > a{
-    background-color: #3498db;
-    color: #fff;
+    background-color: #ffb1ba;
+    color: #1F1717;
 }
 
 .dropdown-link:not(:nth-last-child(2)){
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid #FCF5ED;
 }
 
 .dropdown-link i{
@@ -189,7 +191,7 @@ section{
     height: 11px;
     top: -5.5px;
     left: 32px;
-    background-color: #fff;
+    background-color: #FCF5ED;
     transform: rotate(45deg);
     cursor: pointer;
     transition: .3s;
@@ -233,7 +235,7 @@ section{
         top: 3rem;
         left: 0;
         width: 100%;
-        background-color: #69bde7;
+        background-color: #FCF5ED;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
@@ -302,7 +304,7 @@ section{
 
     .dropdown-link > a{
         background-color: transparent;
-        color: #fff;
+        color: #1F1717;
         padding: 1.2rem 2rem;
         line-height: 1;
     }
