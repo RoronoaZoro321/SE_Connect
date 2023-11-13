@@ -31,7 +31,6 @@ html, body {
 
 .row {
     display: flex;
-    flex-direction: row;
     /* gap: 100px; */
     width: 100%;
     margin-bottom: 30px;
@@ -106,33 +105,46 @@ input[type=number] {
 
 .description {
     background-color: #262b46;
-    width: 425px;
+    width: 415px;
     height: 120px;
     margin-left: 15px;
     font-size: 20px;
     color: rgba(247, 247, 247, 0.674);
     border-radius: 5px;
+    padding: 10px;
 }
 
-.row button {
+.row-1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.row-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-2 button {
     background-color: #2c354f;
     color: #fffffc;
-    padding: 10px 30px;
     border: none;
     cursor: pointer;
     font-size: 18px;
-    margin-left: 627px;
-    margin-top: 10px;
     border-radius: 10px;
+    margin-top: 30px;
+    width: 15%;
+    margin-left: 615px;
 }
 
-.row button:hover {
+.row-2 button:hover {
     background-color: #181d2b;
 }
 
 .row h4 {
     text-align: center;
 }
+
+
 
 
 

@@ -36,20 +36,19 @@
                     <label class="email_label">Email</label>
                     <div class="email_box">{{data.email}}</div>
                 </div>
-                <form class="row" id="userProfileForm">
-                    <label class="age_label" for="age">Age</label>
-                    <input type="number" id="age" name="age" value="{{ data.age }}" required>
-                    <br>
-                    <label class="description_label" for="description">Description</label>
-                    <textarea class="description" name="description" id="description"
-                    cols="30" rows="10" placeholder="Enter your Bio" required>{{ data.description }}</textarea>
-                    <button type="submit">Save</button>
+                <form id="userProfileForm">
+                    <div class="row-1">
+                        <label class="age_label" for="age">Age</label>
+                        <input type="number" id="age" name="age" value="{{ data.age }}" required>
+                        <br>
+                        <label class="description_label" for="description">Description</label>
+                        <textarea class="description" name="description" id="description"
+                        cols="30" rows="10" placeholder="Enter your Bio" required>{{ data.description }}</textarea>
+                    </div>
+                    <div class="row-2">
+                        <button type="submit">Save</button>
+                    </div>
                 </form>
-                <form class="row">
-                </form>
-                <!-- <div class="save">
-                    <button>save</button>
-                </div> -->
                 <div class="displayMessage">
                     <h4 id="error-message" style="color: red;"></h4>
                     <h4 id="done-message" style="color: greenyellow;"></h4>
