@@ -1,4 +1,5 @@
 import persistent
+from backend.services.Post import PostServ
 
 
 class User(persistent.Persistent):
@@ -92,6 +93,8 @@ class User(persistent.Persistent):
 class Post(persistent.Persistent):
     def __init__(self, id: int, user_id: int, username: str, content: str):
         self.id = id
+        self.time = PostServ.getTimeNow()
+        self.time_diff = None
         self.user_id = user_id
         self.username = username
         self.content = content
@@ -112,6 +115,13 @@ class Post(persistent.Persistent):
 
     def get_id(self):
         return self.id
+    
+    def get_time(self):
+        return self.time
+    
+    def get_time_diff(self):
+        self.time_diff = PostServ.getTimeDifference(self.time)
+        return self.time_diff
 
     def get_user_id(self):
         return self.user_id
@@ -138,6 +148,16 @@ class Post(persistent.Persistent):
         self.likes.append(minimal_user)
         self.likes_count += 1
         self._p_changed = True
+
+    def remove_like(self, minimal_user):
+        try:
+            self.likes.remove(minimal_user)
+            self.likes_count -= 1
+            self._p_changed = True
+            return 1
+        except:
+            print("Unable to remove like from user" + minimal_user)
+            return 0
 
     def add_comment(self, minimal_user, comment):
         minimal_user.update({"comment": comment})
