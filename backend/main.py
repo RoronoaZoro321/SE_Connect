@@ -87,8 +87,8 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
             "firstName": user.get_firstname(),
             "lastName": user.get_lastname(),
             "email": user.get_email(),
-            # "age": user.get_age(),
-            # "description": user.get_description()
+            "age": user.get_age(),
+            "description": user.get_description()
         }
         # return data
         return templates.TemplateResponse("userProfile.html", {"request": request, "data": data})
@@ -107,8 +107,8 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
                 "firstName": otherUser.get_firstname(),
                 "lastName": otherUser.get_lastname(),
                 "email": otherUser.get_email(),
-                # "age": otherUser.get_age(),
-                # "description": otherUser.get_description()
+                "age": otherUser.get_age(),
+                "description": otherUser.get_description()
             }
             return templates.TemplateResponse("userProfileFromOther.html", {"request": request, "data": data})
         else:

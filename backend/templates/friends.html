@@ -18,6 +18,7 @@
                 <li>
                     <a href="/userProfileFromOther/{{ data.friends_id[i] }}">{{ data.usernames[i] }}</a>
                     <a href="/removeFriend/{{ data.friends_id[i] }}">Remove</a>
+                    <a href="mailto:{{ data.friends_id[i] }}@kmitl.ac.th">Contact vai mail</a>
                 </li>
             {% endfor %}
         </ul>
