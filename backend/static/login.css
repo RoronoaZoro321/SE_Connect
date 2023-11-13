@@ -3,8 +3,8 @@ body {
 }
 
 h2 {
-    color: #ffffff;
-    /* -webkit-text-stroke: 1px rgb(0, 0, 0); */
+    color: #1F1717;
+    -webkit-text-stroke: 3px #1F1717;
     font-size: 72px;
     margin-top: 40px;
     font-family: sans-serif;
@@ -15,10 +15,10 @@ h2 {
     background: #FCF5ED;
     width: 40%;
     margin: 0 auto;
-    margin-top: 10%;
+    margin-top: 7%;
     border-radius: 20px;
-    padding: 5px;
-    
+    padding: 40px 10px 10px 10px;
+    border: solid 2px #1F1717;
 }
 
 input {
@@ -28,9 +28,9 @@ input {
     padding: 8px;
     margin: 15px;
     font-size: 16px;
-    background-color: #262b46;
+    background-color: #FCF5ED;
     /* F45050 */
-    color: aliceblue;
+    color: #1F1717;
     
 }
 
@@ -53,7 +53,7 @@ input {
 }
 
 button {
-    background: #2c354f;
+    background: #1F1717;
     color: #fffffc;
     margin-top: 30px;
     margin-bottom: 10%;
@@ -65,28 +65,31 @@ button {
 }
 
 button:hover {
-    background-color: #181d2b;
+    background-color: #1f1717c1;
 }
 
 .to-sign-up {
-    color: #FFFFFF;
+    color: #1F1717;
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 10px;
     text-align: center;
+    font-size: 22px;
 }
 
 .to-sign-up span a{
-    color: #ffff8d;
+    color: #CE5A67;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
+    font-size: 22px;
 }
 
 .to-sign-up span a:hover {
-    color: #ff0000;
+    color: #ffcc00;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
+    font-size: 22px;
 }
