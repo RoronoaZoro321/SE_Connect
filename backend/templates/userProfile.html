@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', path='user_profile.css') }}" rel="stylesheet" type="text/css" >
-    <title>User Profile</title>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', path='user_profile.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 </head>
+
 <body>
+    {% block content %}
     <div class="user">
         <div class="user-container">
             <h1>User Profile</h1>
@@ -41,8 +44,8 @@
                     <input type="number" id="age" name="age" value="{{ data.age }}" required>
                     <br>
                     <label class="description_label" for="description">Description</label>
-                    <textarea class="description" name="description" id="description"
-                    cols="30" rows="10" placeholder="Enter your Bio" required>{{ data.description }}</textarea>
+                    <textarea class="description" name="description" id="description" cols="30" rows="10"
+                        placeholder="Enter your Bio" required>{{ data.description }}</textarea>
                     <button type="submit">Save</button>
                 </form>
                 <form class="row">
@@ -58,5 +61,7 @@
         </div>
     </div>
     <script src="{{ url_for('static', path='userProfile.js') }}"></script>
+    {% endblock %}
 </body>
+
 </html>
