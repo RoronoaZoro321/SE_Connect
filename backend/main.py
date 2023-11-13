@@ -364,7 +364,7 @@ def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str 
         response.status_code = 401
         return {"message": "Invalid credentials"}
 
-@app.post("/removeFriend/{id}")
+@app.get("/removeFriend/{id}")
 def removeFriend(response: Response, id: int, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
@@ -375,7 +375,8 @@ def removeFriend(response: Response, id: int, sessionId: Annotated[str | None, C
             if (user.remove_friend(id)):
                 transaction.commit()
                 response.status_code = 200
-                return {"message": "Friend removed successfully"}
+                # return {"message": "Friend removed successfully"}
+                return RedirectResponse(url="/friends")
             else:
                 response.status_code = 400
                 return {"message": "Friend not found"}
