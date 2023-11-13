@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+<head>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='startup.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
+</head>
+
+<body>
+    {% block content %}
+    <h1>Welcome to SE Startup!</h1>
+    <h2>Make your idea come thru</h2>
+    {% endblock %}
+</body>
