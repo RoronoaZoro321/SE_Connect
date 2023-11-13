@@ -346,9 +346,12 @@ def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
 def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
-        if data.friend_id not in root.users:
-            response.status_code = 400
-            return {"message": "No user found for this id"}
+        if data.friend_id not in root.users: 
+            response.status_code = 400 
+            return {"message": "No user found for this id"} 
+        elif data.friend_id == user.get_student_id(): 
+            response.status_code = 400 
+            return {"message": "Cannot add yourself as a friend"} 
         else:
             if (user.add_friend(data.friend_id)):
                 transaction.commit()
