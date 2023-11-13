@@ -73,7 +73,7 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
     if user:
         posts = PostServ.getPosts(root)
         minimal_user = {"studentId": user.get_student_id(), "username": user.get_username()}
-        return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts, "minimal_user": minimal_user, "has_liked": PostServ.hasUserLikedPost})
+        return templates.TemplateResponse("se_community.html", {"request": request,"authenticated": True, "posts": posts, "minimal_user": minimal_user, "has_liked": PostServ.hasUserLikedPost})
     else:
         return RedirectResponse(url="/login")
 
