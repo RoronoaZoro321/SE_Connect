@@ -14,7 +14,7 @@ from backend.apis.base import api_router
 from backend.db.models import User, Post
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
-from backend.models.base import CommentData, LoginData, SignupData, UserProfileData, AddFriendData, PostInteractData
+from backend.models.base import CommentData, LoginData, PostData, SignupData, UserProfileData, AddFriendData, PostInteractData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -72,7 +72,8 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         posts = PostServ.getPosts(root)
-        return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts})
+        minimal_user = {"studentId": user.get_student_id(), "username": user.get_username()}
+        return templates.TemplateResponse("se_community.html", {"request": request, "posts": posts, "minimal_user": minimal_user, "has_liked": PostServ.hasUserLikedPost})
     else:
         return RedirectResponse(url="/login")
 
@@ -118,7 +119,7 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
 
 
 @app.post("/newPost")
-def createPost(response: Response, content: str, sessionId: Annotated[str | None, Cookie()] = None):
+def createPost(response: Response, postData: PostData, sessionId: Annotated[str | None, Cookie()] = None):
     try:
 
         user = UserServ.getUserFromSession(sessionId, root)
@@ -133,7 +134,7 @@ def createPost(response: Response, content: str, sessionId: Annotated[str | None
                 raise HTTPException(
                     status_code=400, detail="This ID already exists")
 
-            new_post = Post(post_id, user_id, username, content)
+            new_post = Post(post_id, user_id, username, postData.content)
             user.add_post(new_post)
             root.posts[post_id] = new_post
             transaction.commit()
@@ -147,18 +148,43 @@ def createPost(response: Response, content: str, sessionId: Annotated[str | None
         raise e
 
 
-@app.post("/api/like")
-def like(postInteractData: PostInteractData):
-    post_id = postInteractData.post_id
-    post = PostServ.getPostFromID(post_id, root)
+@app.post("/api/like/{postId}")
+def like(response: Response, postId: int, sessionId: Annotated[str | None, Cookie()] = None):
+    post = PostServ.getPostFromID(postId, root)
+
+    if not sessionId:
+        response.status_code = 401
+        return {"message": "Unauthenticated"}
 
     if post:
-        minimal_user = {"studentId": postInteractData.student_id,
-                        "username": postInteractData.username}
-        post.add_like(minimal_user)
-        return {"Success": "Liked post successfully"}
+        user = UserServ.getUserFromSession(sessionId, root)
+        if not user:
+            response.status_code = 404
+            return {"message": "User not found"}
+        
+        minimal_user = {"studentId": user.student_id, "username": user.username}
+        like = True
+        for like_user in post.get_likes(): # Unlike instead if user already liked
+            if like_user["studentId"] == user.get_student_id():
+                like = False
+                break
+
+        if like:
+            post.add_like(minimal_user)
+            response.status_code = 200
+            return {"message": "Liked post successfully", "data": "like"}
+        else:
+            success = post.remove_like(minimal_user)
+            if success:
+                response.status_code = 200
+                return {"message": "Unliked post successfully", "data": "unlike"}
+            else:
+                response.status_code = 400
+                return {"message": "Unable to unlike post"}
+
     else:
-        return {"Error": "Post not found"}
+        response.status_code = 404
+        return {"error": "Post not found"}
 
 
 @app.post("/api/comment")
@@ -181,6 +207,11 @@ def comment(postInteractData: PostInteractData, comment: CommentData):
 def clearPosts():
     root.posts = BTrees.OOBTree.BTree()
     root.post_id_count = 0
+
+    users = root.users
+    for user in users.values():
+        user.posts = []
+
     return {"Success": "Cleared posts successfully"}
 
 

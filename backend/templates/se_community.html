@@ -12,11 +12,32 @@
     {% block content %}
     <h1>Posts</h1>
     <br>
+    <h3>Add new post</h3>
+    <form id="newPostForm">
+        <div class="row-1">
+            <label class="message_label" for="message">Message</label>
+            <textarea class="message" type="text" id="message" name="message" cols="30" rows="10" style="resize: none;"
+                required></textarea>
+        </div>
+        <div class="row-2">
+            <button type="submit">Post</button>
+        </div>
+    </form>
+    <br>
     {% for post in posts %}
     <div class="post">
         <p>{{ post.get_username() }}: {{ post.get_content() }}</p>
-        <p>Likes: {{ post.get_likes_count() }} <button id="like">Like</button></p>
-        <p>Comments: <button id="comment">Comment</button></p>
+        <p>{{ post.get_time_diff() }}</p>
+        <div>
+            <p>Likes: </p>
+            <p id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</p>
+            <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})">
+                {% if has_liked(post, minimal_user)%} Unlike
+                {% else %} Like
+                {% endif %}
+            </button>
+        </div>
+        <p>Comments: <button onclick="comment({{ post.get_id() }})">Comment</button></p>
         {% for comment in post.get_comments() %}
         <p> {{ comment.username }}: {{ comment.comment }}</p>
         {% endfor %}
