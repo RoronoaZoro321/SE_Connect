@@ -32,7 +32,17 @@ class UserServ:
 
     @staticmethod
     def getUserFromStudentId(studentId, db) -> User | None:
-        pass
+        try:
+            users = db.users
+            if users is None:
+                raise HTTPException(status_code=400, detail="No users found")
+            for user in users.values():
+                if user.student_id == studentId:
+                    return user
+        except Exception as e:
+            raise e
+
+        return None
 
     @staticmethod
     def loginUser(studentId, password, db) -> str | None:

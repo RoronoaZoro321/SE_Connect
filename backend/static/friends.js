@@ -23,11 +23,15 @@ document.getElementById('friends-form').addEventListener('submit', async (event)
         const response = await fetch('/add_friend', options);
         console.log(response);
     
-        if (response.ok) {
+        if (response.status === 200) {
+            console.log("Friend added");
             const data = await response.json();
+            document.getElementById('error-message').innerText = "";
             document.getElementById('done-message').innerText = data.message;
+            window.location.href = '/friends';
         } else {
             const data = await response.json();
+            document.getElementById('done-message').innerText = "";
             document.getElementById('error-message').innerText = data.message;
         }
       } catch (error) {

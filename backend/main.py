@@ -94,6 +94,27 @@ def userProfile(request: Request, sessionId: Annotated[str | None, Cookie()] = N
         return templates.TemplateResponse("userProfile.html", {"request": request, "data": data})
     else:
         return RedirectResponse(url="/login")
+    
+@app.get("/userProfileFromOther/{id}", response_class=HTMLResponse)
+def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        otherUser = UserServ.getUserFromStudentId(id, root)
+        if otherUser:
+            data = {
+                "id": otherUser.get_student_id(),
+                "username": otherUser.get_username(),
+                "firstName": otherUser.get_firstname(),
+                "lastName": otherUser.get_lastname(),
+                "email": otherUser.get_email(),
+                # "age": otherUser.get_age(),
+                # "description": otherUser.get_description()
+            }
+            return templates.TemplateResponse("userProfileFromOther.html", {"request": request, "data": data})
+        else:
+            return RedirectResponse(url="/")
+    else:
+        return RedirectResponse(url="/login")
 
 
 @app.post("/newPost")
@@ -183,6 +204,7 @@ def updateProfile(response: Response, data: UserProfileData, sessionId: Annotate
     else:
         response.status_code = 404
         return {"message": "User not found"}
+
 
 
 @app.post("/login")
@@ -306,25 +328,57 @@ def friends(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         friends_id = user.get_friends()
-        friends = []
+        usernames = []
         for i in friends_id:
-            friends.append(root.users[i].get_username())
-        return templates.TemplateResponse("friends.html", {"request": request, "friends": friends})
+            usernames.append(root.users[i].get_username())
+        data = {
+            "usernames": usernames,
+            "friends_id": friends_id
+        }
+        print(data)
+        return templates.TemplateResponse("friends.html", {"request": request, "data": data})
+    else:
+        return RedirectResponse(url="/login")
 
+    
 
 @app.post("/add_friend")
 def addFriend(response: Response, data: AddFriendData, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
-        if data.friend_id not in root.users:
-            response.status_code = 400
-            return {"message": "No user found for this id"}
+        if data.friend_id not in root.users: 
+            response.status_code = 400 
+            return {"message": "No user found for this id"} 
+        elif data.friend_id == user.get_student_id(): 
+            response.status_code = 400 
+            return {"message": "Cannot add yourself as a friend"} 
         else:
             if (user.add_friend(data.friend_id)):
                 transaction.commit()
                 response.status_code = 200
                 return {"message": "Friend added successfully"}
-            return {"message": "Friend already added"}
+            else:
+                response.status_code = 400
+                return {"message": "Friend already added"}
+    else:
+        response.status_code = 401
+        return {"message": "Invalid credentials"}
+
+@app.post("/removeFriend/{id}")
+def removeFriend(response: Response, id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        if id not in root.users:
+            response.status_code = 400
+            return {"message": "No user found for this id"}
+        else:
+            if (user.remove_friend(id)):
+                transaction.commit()
+                response.status_code = 200
+                return {"message": "Friend removed successfully"}
+            else:
+                response.status_code = 400
+                return {"message": "Friend not found"}
     else:
         response.status_code = 401
         return {"message": "Invalid credentials"}
