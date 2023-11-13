@@ -7,7 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <!-- <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css"> -->
     <title>SEConnect</title>
+    <style>
+        header {
+            background-color: #ffffff;
+        }
+    </style>
     {% endblock %}
 
     <style>
@@ -24,14 +30,13 @@
             <div class="logo-container">
                 <a href="/"> <h3 class="logo">SE<span>Connect</span></h3></a>
             </div>
-
             <div class="nav-btn">
                 <div class="nav-links">
                     <ul>
-                        <li class="nav-link" style="--i: .6s">
+                        <li class="nav-link">
                             <a href="/">Home</a>
                         </li>
-                        <li class="nav-link" style="--i: .85s">
+                        <li class="nav-link">
                             <a href="/">Menu<i class="fas fa-caret-down"></i></a>
                             <div class="dropdown">
                                 <ul>
@@ -44,8 +49,8 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-link" style="--i: 1.1s">
-                            <a href="#">About<i class="fas fa-caret-down"></i></a>
+                        <li class="nav-link">
+                            <a href="/">About<i class="fas fa-caret-down"></i></a>
                             <div class="dropdown">
                                 <ul>
                                     <li class="dropdown-link">
@@ -56,7 +61,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="log-sign" style="--i: 1.8s">
+                <div class="log-sign">
                     <a href="/login" class="btn transparent">Log in</a>
                     <a href="/signup" class="btn solid">Sign up</a>
                 </div>
