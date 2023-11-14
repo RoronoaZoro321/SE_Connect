@@ -118,7 +118,7 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
         return RedirectResponse(url="/login")
 
 
-@app.post("/newPost")
+@app.post("/api/newPost")
 def createPost(response: Response, postData: PostData, sessionId: Annotated[str | None, Cookie()] = None):
     try:
 
