@@ -10,37 +10,45 @@
 
 <body>
     {% block content %}
-    <h1>Posts</h1>
     <br>
-    <h3>Add new post</h3>
-    <form id="newPostForm">
-        <div class="row-1">
-            <label class="message_label" for="message">Message</label>
-            <textarea class="message" type="text" id="message" name="message" cols="30" rows="10" style="resize: none;"
-                required></textarea>
-        </div>
-        <div class="row-2">
-            <button type="submit">Post</button>
-        </div>
-    </form>
+    <div class="new_post">
+        <form id="newPostForm">
+            <div class="row">
+                <div class="row-1">
+                    <textarea class="message" type="text" id="message" name="message" cols="30" rows="10" style="resize: none;"
+                        required></textarea>
+                </div>
+                <div class="row-2">
+                    <button type="submit">POST</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <br>
+    <!-- <div class="add_friend">
+        <p>HELLO</p>
+    </div> -->
     {% for post in posts %}
     <div class="post">
-        <p>{{ post.get_username() }}: {{ post.get_content() }}</p>
-        <p>{{ post.get_time_diff() }}</p>
-        <div>
-            <p>Likes: </p>
-            <p id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</p>
-            <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})">
+        <p>{{ post.get_username() }} 
+            <span class="time">{{ post.get_time_diff() }}</span>
+        </p>
+        <p class="content">{{ post.get_content() }}</p>
+        <div class="react">
+            <!-- <p>Likes: </p> -->
+            <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})" class="like">
                 {% if has_liked(post, minimal_user)%} Unlike
                 {% else %} Like
                 {% endif %}
             </button>
+            <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
+            
+            <p>Comments: <button onclick="comment({{ post.get_id() }})">Comment</button></p>
+            {% for comment in post.get_comments() %}
+            <p> {{ comment.username }}: {{ comment.comment }}</p>
+            {% endfor %}
         </div>
-        <p>Comments: <button onclick="comment({{ post.get_id() }})">Comment</button></p>
-        {% for comment in post.get_comments() %}
-        <p> {{ comment.username }}: {{ comment.comment }}</p>
-        {% endfor %}
+       
     </div>
     <br>
     {% endfor %}
