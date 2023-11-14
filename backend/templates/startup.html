@@ -10,6 +10,27 @@
 <body>
     {% block content %}
     <h1>Welcome to SE Startup!</h1>
-    <h2>Make your idea come thru</h2>
+    <h2>Find your work here</h2>
+
+    <!-- self.id = id
+    self.user_id = user_id
+    self.username = username
+    self.title = title
+    self.description = description
+    self.skills = []
+    self.enrolls = [] -->
+
+    {% for post in data %}
+        <p>
+        <a href="/startup/{{post.id}}">{{post.title}}</a>
+        {% for skill in post.skills %}
+            <a href="/startup/{{post.id}}">{{skill.title}}</a>
+        {% endfor %}
+        </p>
+    {% endfor %}
+
+    <h2>Find right person for your work</h2>
+    <a href="/startupAdd">Click here</a>
+
     {% endblock %}
 </body>

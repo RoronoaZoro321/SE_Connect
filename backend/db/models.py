@@ -14,6 +14,7 @@ class User(persistent.Persistent):
         self.friends = []  # list[id, id, id] find from user_id
         self.posts = []  # [id id id ] find from post_id
         self.age = 0
+        self.startUpPosts = [] # [id id id ] find from post_id
 
     def __str__(self):
         return f"User: {self.username} {self.firstname} {self.lastname} {self.password}"
@@ -88,6 +89,13 @@ class User(persistent.Persistent):
 
     def get_posts(self):
         return self.posts
+    
+    def get_startUpPosts(self):
+        return self.startUpPosts
+    
+    def add_startUpPost(self, post_id):
+        self.startUpPosts.append(post_id)
+        self._p_changed = True
 
 
 class Post(persistent.Persistent):
@@ -166,3 +174,52 @@ class Post(persistent.Persistent):
 
     def set_share(self, link):
         self.share = link
+
+
+class Skill(persistent.Persistent):
+    def __init__(self, title:str, description:str):
+        self.title = title
+        self.description = description
+
+
+class StartUpPost(persistent.Persistent):
+    def __init__(self, id: int, user_id: int, username: str, title:str, description:str, skills:list):
+        self.id = id
+        self.user_id = user_id
+        self.username = username
+        self.title = title
+        self.description = description
+        self.skills = skills
+        self.enrolls = []
+    
+    def get_id(self):
+        return self.id
+    
+    def get_user_id(self):
+        return self.user_id
+    
+    def get_username(self):
+        return self.username
+    
+    def get_title(self):
+        return self.title
+    
+    def get_description(self):
+        return self.description
+    
+    def get_skills(self):
+        return self.skills
+    
+    def get_enrolls(self):
+        return self.enrolls
+    
+    def add_skill(self, skill):
+        self.skills.append(skill)
+        self._p_changed = True
+
+    def add_enroll(self, enroll_user_id):
+        self.enrolls.append(enroll_user_id)
+        self._p_changed = True
+
+
+    
