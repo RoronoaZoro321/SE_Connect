@@ -436,29 +436,15 @@ def logout(sessionId: Annotated[str | None, Cookie()] = None):
         return RedirectResponse(url="/login")
 
 
-# @app.get("/startup", response_class=HTMLResponse)
-# def startup(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
-#     user = UserServ.getUserFromSession(sessionId, root)
-#     if user:
-#         listOfStartUpPost = user.get_startUpPosts()
-#         data = []
-#         for i in listOfStartUpPost:
-#             data.append(root.startUpPosts.get(i))
-#         return templates.TemplateResponse("startup.html", {"request": request,"authenticated": True, "data": data})
-#     else:
-#         return RedirectResponse(url="/login") 
-
 @app.get("/startup", response_class=HTMLResponse)
 def startup(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         posts = root.startUpPosts
-        # print(posts.get(1).title)
         data = []
         for post in posts:
             data.append(posts.get(post))
         return templates.TemplateResponse("startup.html", {"request": request,"authenticated": True, "data": data})
-        
 
 @app.get("/startupAdd", response_class=HTMLResponse)
 def startupAdd(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
@@ -506,9 +492,10 @@ def getAllStartupPosts():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.delete("/deleteStartupPost/{post_id}")
-def deleteStartupPost(post_id: int):
-    try:
+@app.get("/deleteStartupPost/{post_id}", response_class=HTMLResponse)
+def deleteStartupPost(post_id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
         posts = root.startUpPosts
         if posts is None:
             raise HTTPException(status_code=400, detail="No posts found")
@@ -517,14 +504,18 @@ def deleteStartupPost(post_id: int):
             raise HTTPException(
                 status_code=400, detail="No post found for this id")
         del posts[post_id]
+        user.remove_startUpPost(post_id)
+        print(user.startUpPosts)
         transaction.commit()
-        return {"message": "Post deleted successfully"}
-    except Exception as e:
-        raise e
+        # return {"message": "Post deleted successfully"}
+        return RedirectResponse(url="/viewMyStartUpPostedList")
+    else:
+        return {"Error": "User not found"}
+    
+
 
 @app.get("/startup/enrolls/{post_id}", response_class=HTMLResponse)
 def enrolls(request: Request, post_id: int, sessionId: Annotated[str | None, Cookie()] = None):
-    print("herer")
     user = UserServ.getUserFromSession(sessionId, root)
     if user:
         post = root.startUpPosts.get(post_id)
@@ -541,6 +532,17 @@ def enrolls(request: Request, post_id: int, sessionId: Annotated[str | None, Coo
             return {"Error": "Post not found"}
     return {"Error": "User not found"}
 
+@app.get("/viewMyStartUpPostedList", response_class=HTMLResponse)
+def viewMyStartUpPostedList(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        data = []
+        print(user.get_startUpPosts())
+        for post in user.get_startUpPosts():
+            data.append(root.startUpPosts.get(post))
+        return templates.TemplateResponse("viewMyStartUpPostedList.html", {"request": request,"authenticated": True, "data": data})
+    else:
+        return RedirectResponse(url="/login")
 
 # Close the database connection when the application stops
 @app.on_event("shutdown")
