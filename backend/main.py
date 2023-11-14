@@ -59,12 +59,12 @@ async def read_root(request: Request, sessionId: Annotated[str | None, Cookie()]
 
 @app.get("/login", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request,"authenticated": True})
+    return templates.TemplateResponse("login.html", {"request": request})
 
 
 @app.get("/signup", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request,"authenticated": True})
+    return templates.TemplateResponse("signup.html", {"request": request})
 
 
 @app.get("/se_community", response_class=HTMLResponse)
