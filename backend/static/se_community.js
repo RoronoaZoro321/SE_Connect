@@ -5,7 +5,7 @@ function start() {
         event.preventDefault()
 
         const message = document.getElementById("message").value
-        const postResponse = await fetch("/newPost", {
+        const postResponse = await fetch("/api/newPost", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
