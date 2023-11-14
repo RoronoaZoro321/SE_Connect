@@ -1,5 +1,4 @@
 html, body {
-    background: #3C486B;
     width: 100vw;
     height: 100vh;
     font-family: sans-serif;
@@ -10,16 +9,16 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 5%;
     align-items: center;
     width: 100%;
-    height: 100%;
-    gap: 5%;
+    /* height: 100%; */
 }
 
 .user-container h1 {
-    margin-bottom: 60px;
+    margin-bottom: 45px;
     margin-left: 50px;
-    color: #ffffff;
+    color: #3C486B;
     font-size: 60px;
 }
 
@@ -45,11 +44,13 @@ html, body {
 .description_label {
     margin-right: 10px;
     font-size: 24px;
+    color: #3C486B;
+    font-weight: 600;
 }
 
 .name_box,
 .username_box{
-    background-color: #262b46;
+    background-color: #F45050;
     width: 215px;
     height: 50px;
     padding: 10px;
@@ -57,11 +58,12 @@ html, body {
     margin-right: 30px;
     font-size: 20px;  
     border-radius: 5px;
-    border: solid 1px rgb(255, 255, 255);
+    color: white;
+    border: solid 3px #3C486B;
 }
 
 .surname_box{
-    background-color: #262b46;
+    background-color: #F45050;
     width: 233px;
     height: 50px;
     padding: 10px;
@@ -69,11 +71,12 @@ html, body {
     margin-right: 30px;
     font-size: 20px;  
     border-radius: 5px;
-    border: solid 1px rgb(252, 252, 252);
+    color: white;
+    border: solid 3px #3C486B;
 }
 
 .id_box {
-    background-color: #262b46;
+    background-color: #F45050;
     width: 260px;
     height: 50px;
     padding: 10px;
@@ -81,11 +84,12 @@ html, body {
     margin-left: 15px;
     font-size: 20px;
     border-radius: 5px;
-    border: solid 1px rgb(255, 255, 255);
+    color: white;
+    border: solid 3px #3C486B;
 }
 
 .email_box {
-    background-color: #262b46;
+    background-color: #F45050;
     width: 610px;
     height: 50px;
     padding: 10px;
@@ -93,29 +97,33 @@ html, body {
     margin-left: 15px;
     font-size: 20px;
     border-radius: 5px;
-    border: solid 1px rgb(255, 255, 255);
+    color: white;
+    border: solid 3px #3C486B;
 }
 
 input[type=number] {
-    background-color: #262b46;
+    background-color: #F45050;
     width: 46px;
     height: 30px;
     margin-right: 30px;
     margin-left: 15px;
     font-size: 18px;
-    color: rgba(247, 247, 247, 0.674);
+    color: white;
     border-radius: 5px;
+    text-align: center;
+    border: solid 3px #3C486B;
 }
 
 .description {
-    background-color: #262b46;
-    width: 410px;
+    background-color: #F45050;
+    width: 395px;
     height: 120px;
     margin-left: 15px;
     font-size: 20px;
-    color: rgba(247, 247, 247, 0.674);
+    color: white;
     border-radius: 5px;
     padding: 10px;
+    border: solid 3px #3C486B;
 }
 
 .row-1 {
@@ -129,19 +137,21 @@ input[type=number] {
 }
 
 .row-2 button {
-    background-color: #2c354f;
+    background-color: #F45050;
     color: #fffffc;
     border: none;
     cursor: pointer;
     font-size: 18px;
     border-radius: 10px;
     margin-top: 30px;
-    width: 15%;
-    margin-left: 615px;
+    width: 100px;
+    height: 40px;
+    margin-left: 600px;
+    border: solid 3px #3C486B;
 }
 
 .row-2 button:hover {
-    background-color: #181d2b;
+    background-color: #F9D949;
 }
 
 .row h4 {

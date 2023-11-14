@@ -1,10 +1,10 @@
 body {
-    background-color: #FCF5ED;
+    background-color: #F0F0F0;
 }
 
 h2 {
-    color: #1F1717;
-    -webkit-text-stroke: 3px #1F1717;
+    color: #3C486B;
+    -webkit-text-stroke: 3px #3C486B;
     font-size: 72px;
     margin-top: 40px;
     font-family: sans-serif;
@@ -12,25 +12,24 @@ h2 {
 }
 
 .login_container {
-    background: #FCF5ED;
+    background: #F0F0F0;
     width: 40%;
     margin: 0 auto;
     margin-top: 7%;
     border-radius: 20px;
     padding: 40px 10px 10px 10px;
-    border: solid 2px #1F1717;
+    border: double 8px #3C486B;
 }
 
 input {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 4px 4px #3C486B);
     width: 75%;
     height: 30px;
     padding: 8px;
     margin: 15px;
     font-size: 16px;
-    background-color: #FCF5ED;
-    /* F45050 */
-    color: #1F1717;
+    background-color: #F0F0F0;
+    color: #3C486B;
     
 }
 
@@ -49,11 +48,11 @@ input {
 }
 
 .forget-password a:hover {
-    color: rgb(246, 91, 91);
+    color: #F45050;
 }
 
 button {
-    background: #1F1717;
+    background: #F45050;
     color: #fffffc;
     margin-top: 30px;
     margin-bottom: 10%;
@@ -62,14 +61,15 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 20px;
+    font-weight: 600;
 }
 
 button:hover {
-    background-color: #1f1717c1;
+    background-color: #F9D949;
 }
 
 .to-sign-up {
-    color: #1F1717;
+    color: #3C486B;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -79,7 +79,7 @@ button:hover {
 }
 
 .to-sign-up span a{
-    color: #CE5A67;
+    color: #F45050;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
@@ -87,7 +87,7 @@ button:hover {
 }
 
 .to-sign-up span a:hover {
-    color: #ffcc00;
+    color: #F9D949;
     font-weight: bold; 
     text-decoration: underline; 
     cursor: pointer;
