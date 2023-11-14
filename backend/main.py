@@ -118,7 +118,7 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
         return RedirectResponse(url="/login")
 
 
-@app.post("/api/newPost")
+@app.post("/api/newPost", tags=["API"])
 def createPost(response: Response, postData: PostData, sessionId: Annotated[str | None, Cookie()] = None):
     try:
 
@@ -148,7 +148,7 @@ def createPost(response: Response, postData: PostData, sessionId: Annotated[str 
         raise e
 
 
-@app.post("/api/like/{postId}")
+@app.post("/api/like/{postId}", tags=["API"])
 def like(response: Response, postId: int, sessionId: Annotated[str | None, Cookie()] = None):
     post = PostServ.getPostFromID(postId, root)
 
@@ -187,7 +187,7 @@ def like(response: Response, postId: int, sessionId: Annotated[str | None, Cooki
         return {"error": "Post not found"}
 
 
-@app.post("/api/comment")
+@app.post("/api/comment", tags=["API"])
 def comment(postInteractData: PostInteractData, comment: CommentData):
     post_id = postInteractData.post_id
     post = PostServ.getPostFromID(post_id, root)
@@ -203,7 +203,7 @@ def comment(postInteractData: PostInteractData, comment: CommentData):
 # Debug
 
 
-@app.get("/clearPosts")
+@app.get("/api/clearPosts", tags=["API"])
 def clearPosts():
     root.posts = BTrees.OOBTree.BTree()
     root.post_id_count = 0
@@ -215,7 +215,7 @@ def clearPosts():
     return {"Success": "Cleared posts successfully"}
 
 
-@app.get("/clearUsers")
+@app.get("/api/clearUsers", tags=["API"])
 def clearUsers():
     root.users = BTrees.OOBTree.BTree()
     return {"Success": "Cleared users successfully"}
@@ -273,7 +273,7 @@ def signup(response: Response, data: SignupData):
         raise e
 
 
-@app.get("/getAllPosts")
+@app.get("/api/getAllPosts", tags=["API"])
 def getAllPosts():
     try:
         posts = root.posts
@@ -285,7 +285,7 @@ def getAllPosts():
 
 
 # get single user
-@app.get("/getUser")
+@app.get("/api/getUser", tags=["API"])
 def getUserSingle(user_id: int):
     try:
         users = root.users
@@ -304,7 +304,7 @@ def getUserSingle(user_id: int):
 
 
 # get all users
-@app.get("/getAllUsers")
+@app.get("/api/getAllUsers", tags=["API"])
 def getAllUsers():
     try:
         users = root.users
@@ -316,7 +316,7 @@ def getAllUsers():
 
 
 # delete single user
-@app.delete("/deleteUser")
+@app.delete("/api/deleteUser", tags=["API"])
 def deleteUser(user_id: int):
     try:
         users = root.users
@@ -334,7 +334,7 @@ def deleteUser(user_id: int):
 
 
 # Update user
-@app.put("/updateUser")
+@app.put("/api/updateUser", tags=["API"])
 def updateUser(user_id: int, username: str, firstName: str, lastName: str, password: str):
     try:
         users = root.users
