@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+<head>
+    {% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', path='viewMyStartUpPostedList.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
+</head>
+
+<body>
+    {% block content %}
+
+    <!-- self.id = id
+    self.user_id = user_id
+    self.username = username
+    self.title = title
+    self.description = description
+    self.skills = []
+    self.enrolls = [] -->
+
+    <h1>This is the list of your Post</h1>
+    <br>
+
+    {% for post in data %}
+        <h1>{{post.title}}</h1>
+        <a href="/deleteStartupPost/{{post.id}}">Delete</a>
+        <h3>Enrolls By:</h3>
+        {% for id in post.enrolls %}
+            <p>  
+            {{id}}
+            <a href="mailto:{{id}}@kmitl.ac.th">Contact</a>
+            </p>
+        {% endfor %} 
+        <br>
+        <br>
+    {% endfor %}
+
+    
+    <p><a href="/startup">back</a></p>
+
+    {% endblock %}
+</body>

@@ -96,6 +96,10 @@ class User(persistent.Persistent):
     def add_startUpPost(self, post_id):
         self.startUpPosts.append(post_id)
         self._p_changed = True
+    
+    def remove_startUpPost(self, post_id):
+        self.startUpPosts.remove(post_id)
+        self._p_changed = True
 
 
 class Post(persistent.Persistent):
