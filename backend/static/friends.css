@@ -1,0 +1,66 @@
+.friend-list {
+    /* border: solid 1px black; */
+    width: 70%;
+    margin-left: 100px;
+    margin-top: 90px;
+    margin-bottom: 100px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.friend-list h1 {
+    color: #3C486B;
+}
+
+.friend_list a{
+    color: #3C486B;
+    line-height: 2;
+}
+
+.add_friend {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 100px;
+    line-height: 2;
+}
+
+.add_friend h2 {
+    color: #3C486B;
+    font-size: 28px;
+}
+
+.add_friend input {
+    display: inline;
+    width: 700px;
+    height: 45px;
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-bottom: 40px;
+    background-color: #F45050;
+    border:solid 2px black;
+    line-height: 1.5;
+    padding: 10px;
+    color: #F0F0F0;
+    font-size: 22px;
+    border-radius: 20px;
+}
+
+.add_friend button {
+    display: inline;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 120px;
+    height: 45px;
+    background-color: #F45050;
+    color: #F0F0F0;
+    font-weight: 600;
+    font-size: 18px;
+    border: dashed 2px black;
+    border-radius: 30px;
+}
+
+.displayMessage h4{
+    font-size: 18px;
+    margin-left: 380px;
+}

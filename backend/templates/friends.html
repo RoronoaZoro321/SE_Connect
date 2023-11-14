@@ -10,28 +10,27 @@
 
 <body>
     {% block content %}
-    <h1>My Friends List</h1>
-
-    <div id="friend_list">
-        <ul>
-            {% for i in range(data.friends_id|length) %}
-                <li>
-                    <a href="/userProfileFromOther/{{ data.friends_id[i] }}">{{ data.usernames[i] }}</a>
-                    <a href="/removeFriend/{{ data.friends_id[i] }}">Remove</a>
-                    <a href="mailto:{{ data.friends_id[i] }}@kmitl.ac.th">Contact vai mail</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="friend-list">
+        <h1>My Friends List</h1>
+        <div id="friend_list">
+            <ul>
+                {% for i in range(data.friends_id|length) %}
+                    <li>
+                        <a href="/userProfileFromOther/{{ data.friends_id[i] }}">{{ data.usernames[i] }}</a>
+                        <a href="/removeFriend/{{ data.friends_id[i] }}">Remove</a>
+                        <a href="mailto:{{ data.friends_id[i] }}@kmitl.ac.th">Contact vai mail</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
-    <div>
-        <h2>Add a friend</h2>
+    <div class="add_friend">
         <form action="/add_friend" id="friends-form">
+            <label><h2>Add a friend</h2></label>
             <input type="number" id="friend_id" name="friend_id" placeholder="Enter your friend's id">
             <button type="submit">Add Friend</button>
         </form>
     </div>
-
     <div class="displayMessage">
         <h4 id="error-message" style="color: red;"></h4>
         <h4 id="done-message" style="color: greenyellow;"></h4>
