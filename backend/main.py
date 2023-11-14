@@ -11,10 +11,10 @@ from typing import Annotated
 
 from backend.core.config import settings
 from backend.apis.base import api_router
-from backend.db.models import User, Post
+from backend.db.models import User, Post, StartUpPost
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
-from backend.models.base import CommentData, LoginData, PostData, SignupData, UserProfileData, AddFriendData, PostInteractData
+from backend.models.base import CommentData, LoginData, PostData, SignupData, UserProfileData, AddFriendData, PostInteractData, AddStartUpData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -34,10 +34,15 @@ root = connection.root()
 # Use BTrees.OOBTree to store users and posts
 print("Has users", hasattr(root, "users"))
 print("Has posts", hasattr(root, "posts"))
+print("Has startUp posts", hasattr(root, "startUpPosts"))
+
 if not hasattr(root, "users"):
     root.users = BTrees.OOBTree.BTree()
 if not hasattr(root, "posts"):
     root.posts = BTrees.OOBTree.BTree()
+if not hasattr(root, "startUpPosts"):
+    root.startUpPosts = BTrees.OOBTree.BTree()
+
 
 # Create or update post id count
 print("Current post ID", root.post_id_count if hasattr(
@@ -45,6 +50,11 @@ print("Current post ID", root.post_id_count if hasattr(
 if not hasattr(root, "post_id_count"):
     root.post_id_count = 0
 
+# Create or update startUpPost id count
+if not hasattr(root, "startUpPost_id_count"):
+    root.startUpPost_id_count = 0
+print("Current  startUpPost ID", root.startUpPost_id_count if hasattr(
+    root, "post_id_count") else None)
 
 
 # Home route
@@ -426,9 +436,113 @@ def logout(sessionId: Annotated[str | None, Cookie()] = None):
         return RedirectResponse(url="/login")
 
 
+# @app.get("/startup", response_class=HTMLResponse)
+# def startup(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+#     user = UserServ.getUserFromSession(sessionId, root)
+#     if user:
+#         listOfStartUpPost = user.get_startUpPosts()
+#         data = []
+#         for i in listOfStartUpPost:
+#             data.append(root.startUpPosts.get(i))
+#         return templates.TemplateResponse("startup.html", {"request": request,"authenticated": True, "data": data})
+#     else:
+#         return RedirectResponse(url="/login") 
+
+@app.get("/startup", response_class=HTMLResponse)
+def startup(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        posts = root.startUpPosts
+        # print(posts.get(1).title)
+        data = []
+        for post in posts:
+            data.append(posts.get(post))
+        return templates.TemplateResponse("startup.html", {"request": request,"authenticated": True, "data": data})
+        
+
+@app.get("/startupAdd", response_class=HTMLResponse)
+def startupAdd(request: Request, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        return templates.TemplateResponse("startupAdd.html", {"request": request,"authenticated": True})
+    else:
+        return RedirectResponse(url="/login")
+
+@app.post("/startupAdd")
+def startupAdd(response: Response, data: AddStartUpData, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        post_id = root.startUpPost_id_count
+        root.startUpPost_id_count += 1
+        new_post = StartUpPost(post_id, user.get_student_id(), user.get_username(), data.title, data.description, data.skills)
+        user.add_startUpPost(post_id)
+        root.startUpPosts[post_id] = new_post
+        transaction.commit()
+        response.status_code = 200
+        return {"message": "Post created successfully"}
+    else:
+        response.status_code = 404
+        return {"message": "User not found"}
+
+@app.get("/startup/{id}", response_class=HTMLResponse)
+def startupPost(request: Request, id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        post = root.startUpPosts.get(id)
+        if post:
+            return templates.TemplateResponse("startupSingle.html", {"request": request,"authenticated": True, "data": post})
+        else:
+            return RedirectResponse(url="/startup")
+    else:
+        return RedirectResponse(url="/login")
+
+@app.get("/getAllStartupPosts")
+def getAllStartupPosts():
+    try:
+        posts = root.startUpPosts
+        if posts is None:
+            raise HTTPException(status_code=400, detail="No posts found")
+        return posts
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/deleteStartupPost/{post_id}")
+def deleteStartupPost(post_id: int):
+    try:
+        posts = root.startUpPosts
+        if posts is None:
+            raise HTTPException(status_code=400, detail="No posts found")
+        post = posts.get(post_id)
+        if post is None:
+            raise HTTPException(
+                status_code=400, detail="No post found for this id")
+        del posts[post_id]
+        transaction.commit()
+        return {"message": "Post deleted successfully"}
+    except Exception as e:
+        raise e
+
+@app.get("/startup/enrolls/{post_id}", response_class=HTMLResponse)
+def enrolls(request: Request, post_id: int, sessionId: Annotated[str | None, Cookie()] = None):
+    print("herer")
+    user = UserServ.getUserFromSession(sessionId, root)
+    if user:
+        post = root.startUpPosts.get(post_id)
+        if post:
+            if (user.student_id in post.get_enrolls()):
+                return templates.TemplateResponse("startupSingle.html", {"request": request,"authenticated": True, "data": post, "error": "Already enrolled"})
+            if (user.student_id == post.user_id):
+                return templates.TemplateResponse("startupSingle.html", {"request": request,"authenticated": True, "data": post, "error": "Cannot enroll on your own post"})
+            else:
+                post.add_enroll(user.student_id)
+                transaction.commit()
+                return templates.TemplateResponse("startupSingle.html", {"request": request,"authenticated": True, "data": post, "success": "Enrolled on post successfully"})
+        else:
+            return {"Error": "Post not found"}
+    return {"Error": "User not found"}
+
+
 # Close the database connection when the application stops
-
-
 @app.on_event("shutdown")
 async def shutdown():
     transaction.commit()

@@ -34,3 +34,12 @@ class PostInteractData(BaseModel):
 
 class CommentData(BaseModel):
     comment: str
+
+class Skill(BaseModel):
+    title: str
+    description: str
+
+class AddStartUpData(BaseModel):
+    title: str
+    description: str
+    skills: list[Skill]
