@@ -15,8 +15,8 @@
         <form id="newPostForm">
             <div class="row">
                 <div class="row-1">
-                    <textarea class="message" type="text" id="message" name="message" cols="30" rows="10" style="resize: none;"
-                        required></textarea>
+                    <textarea class="message" type="text" id="message" name="message" cols="30" rows="10"
+                        style="resize: none;" spellcheck="false" required></textarea>
                 </div>
                 <div class="row-2">
                     <button type="submit">POST</button>
@@ -30,7 +30,7 @@
     </div> -->
     {% for post in posts %}
     <div class="post">
-        <p>{{ post.get_username() }} 
+        <p>{{ post.get_username() }}
             <span class="time">{{ post.get_time_diff() }}</span>
         </p>
         <p class="content">{{ post.get_content() }}</p>
@@ -42,13 +42,13 @@
                 {% endif %}
             </button>
             <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
-            
+
             <p>Comments: <button onclick="comment({{ post.get_id() }})">Comment</button></p>
             {% for comment in post.get_comments() %}
             <p> {{ comment.username }}: {{ comment.comment }}</p>
             {% endfor %}
         </div>
-       
+
     </div>
     <br>
     {% endfor %}

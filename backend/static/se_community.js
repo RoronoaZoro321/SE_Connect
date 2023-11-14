@@ -1,6 +1,17 @@
 document.addEventListener("DOMContentLoaded", start)
 
 function start() {
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute("style", tx[i].style.cssText + "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+        tx[i].addEventListener("input", OnInput, false);
+    }
+    
+    function OnInput() {
+        this.style.height = 0;
+        this.style.height = (this.scrollHeight) + "px";
+    }
+
     document.getElementById("newPostForm").addEventListener("submit", async (event) => {
         event.preventDefault()
 
@@ -20,27 +31,6 @@ function start() {
             console.log("status code" + postResponse.status);
         }
     })
-
-    // document.getElementById("like").addEventListener("click", () => {
-    //     (async () => {
-    //         const rawResponse = await fetch('/api/like', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({ student_id, username, post_id })
-    //             //  student_id: int
-    //             // username: str
-    //             // post_id: int
-    //         });
-    //         const content = await rawResponse.json();
-
-    //         console.log(content);
-    //     })();
-    // })
-
-    // document.getElementById("comment")
 }
 
 function like(postId) {
@@ -58,13 +48,11 @@ function like(postId) {
             const likeNum = document.getElementById(`likeNum${postId}`)
             const likeButton = document.getElementById(`likeButton${postId}`)
 
-            if (message.data == "like") 
-            {
+            if (message.data == "like") {
                 likeNum.innerText = parseInt(likeNum.innerText) + 1
                 likeButton.innerText = "Unlike"
             }
-            else if (message.data == "unlike") 
-            {
+            else if (message.data == "unlike") {
                 likeNum.innerText = parseInt(likeNum.innerText) - 1
                 likeButton.innerText = "Like"
             }
