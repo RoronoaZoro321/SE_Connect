@@ -455,6 +455,8 @@ def startup(request: Request, sessionId: Annotated[str | None, Cookie()] = None)
         for post in posts:
             data.append(posts.get(post))
         return templates.TemplateResponse("startup.html", {"request": request,"authenticated": True, "data": data})
+    else:
+        return RedirectResponse(url="/login")
 
 @app.get("/startupAdd", response_class=HTMLResponse)
 def startupAdd(request: Request, sessionId: Annotated[str | None, Cookie()] = None):

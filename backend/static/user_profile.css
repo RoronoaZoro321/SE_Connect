@@ -126,6 +126,10 @@ input[type=number] {
     border: solid 3px #3C486B;
 }
 
+.description::placeholder {
+    color: #F0F0F0;
+}
+
 .row-1 {
     display: flex;
     flex-direction: row;
@@ -158,7 +162,10 @@ input[type=number] {
     text-align: center;
 }
 
-
+.displayMessage {
+    font-size: 25px;
+    margin: 20px auto;
+}
 
 
 
