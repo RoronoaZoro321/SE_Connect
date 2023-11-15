@@ -197,22 +197,32 @@ def like(response: Response, postId: int, sessionId: Annotated[str | None, Cooki
         return {"error": "Post not found"}
 
 
-@app.post("/api/comment", tags=["API"])
-def comment(postInteractData: PostInteractData, comment: CommentData):
-    post_id = postInteractData.post_id
-    post = PostServ.getPostFromID(post_id, root)
+@app.post("/api/comment/{postId}", tags=["API"])
+def comment(response: Response, postId: int, commentData: CommentData, sessionId: Annotated[str | None, Cookie()] = None):
+    post = PostServ.getPostFromID(postId, root)
+
+    if not sessionId:
+        response.status_code = 401
+        return {"error": "Unauthenticated"}
 
     if post:
-        minimal_user = {"studentId": postInteractData.student_id,
-                        "username": postInteractData.username}
-        post.add_comment(minimal_user, comment)
-        return {"Success": "Commented on post successfully"}
+        user = UserServ.getUserFromSession(sessionId, root)
+        if not user:
+            response.status_code = 404
+            return {"error": "User not found"}
+        
+        minimal_user = {"studentId": user.student_id, "username": user.username}
+        post.add_comment(minimal_user, commentData)
+
+        response.status_code = 200
+        return {"message": "Commented successfully"}
     else:
-        return {"Error": "Post not found"}
+        response.status_code = 404
+        return {"error": "Post not found"}
+
+
 
 # Debug
-
-
 @app.get("/api/clearPosts", tags=["API"])
 def clearPosts():
     root.posts = BTrees.OOBTree.BTree()

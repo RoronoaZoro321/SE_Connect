@@ -13,12 +13,12 @@
     <br>
     <div class="new_post">
         <form id="newPostForm">
-            <div class="row">
-                <div class="row-1">
+            <div class="col">
+                <div class="col-1">
                     <textarea class="message" type="text" id="message" name="message" cols="30" rows="10"
-                        style="resize: none;" spellcheck="false" required></textarea>
+                        style="resize: none; overflow-y:hidden;" spellcheck="false" required></textarea>
                 </div>
-                <div class="row-2">
+                <div class="col-2">
                     <button type="submit">POST</button>
                 </div>
             </div>
@@ -43,10 +43,37 @@
             </button>
             <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
 
-            <p>Comments: <button onclick="comment({{ post.get_id() }})">Comment</button></p>
-            {% for comment in post.get_comments() %}
-            <p> {{ comment.username }}: {{ comment.comment }}</p>
-            {% endfor %}
+            <p><button onclick="toggleCommentForm({{ post.get_id() }})">Comment</button></p>
+            <div class="col" id="commentFormDiv{{ post.get_id() }}" style="display: none;">
+                <div class="col-1" id="col1{{ post.get_id() }}">
+                    <textarea class="commentForm" type="text" id="commentForm{{ post.get_id() }}" name="commentForm"
+                        cols="20" rows="10" style="resize: none; overflow-y:hidden;" spellcheck="false"
+                        required></textarea>
+                </div>
+                <div class="col-2">
+                    <button onclick="comment({{ post.get_id() }}, '{{ minimal_user.username }}')">Submit</button>
+                </div>
+            </div>
+
+            {% if post.get_comments_count() != 0 %}
+            <button id="showCommentsButton{{ post.get_id() }}" onclick="toggleShowComments({{ post.get_id() }})">Show Comments</button>
+            <p><span id="commentsCount{{ post.get_id() }}">{{ post.get_comments_count() }}</span>
+                {% if post.get_comments_count() == 1 %} comment
+                {% else %} comments
+                {% endif %}
+            </p>
+            {% endif %}
+
+            <ul id="commentsList{{ post.get_id() }}" style="display: none;">
+                {% if post.get_comments_count() != 0 %}
+                {% for commentData in post.get_comments() %}
+                <li>
+                    <p>{{ commentData.username }} <span class="time">{{ commentData.comment.time_diff }}</span> :</p>
+                    <p>{{ commentData.comment.text }}</p>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
         </div>
 
     </div>

@@ -1,9 +1,9 @@
-.row {
+.col {
     display: flex;
     width: 60%;
 }
 
-.row-1 textarea{
+.col-1 textarea{
     display: inline;
     width: 580px;
     height: 45px;
@@ -15,11 +15,11 @@
     line-height: 1.5;
     padding: 10px;
     color: #F0F0F0;
-    text-align: center;
+    text-align: left;
     font-size: 22px;
 }
 
-.row-2 button{
+.col-2 button{
     display: inline;
     margin-left: 20px;
     margin-top: 40px;
@@ -33,7 +33,7 @@
     border-radius: 30px;
 }
 
-.row-2 button:hover {
+.col-2 button:hover {
     background-color: #F9D949;
     color: black;
 }

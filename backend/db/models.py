@@ -114,6 +114,7 @@ class Post(persistent.Persistent):
         self.likes = []
         self.likes_count = 0
         self.comments = []
+        self.comments_count = 0
         self.share = None
 
     def __str__(self):
@@ -153,6 +154,9 @@ class Post(persistent.Persistent):
     def get_comments(self):
         return self.comments
 
+    def get_comments_count(self):
+        return self.comments_count
+    
     def get_share(self):
         return self.share
 
@@ -171,9 +175,12 @@ class Post(persistent.Persistent):
             print("Unable to remove like from user" + minimal_user)
             return 0
 
-    def add_comment(self, minimal_user, comment):
-        minimal_user.update({"comment": comment})
+    def add_comment(self, minimal_user, commentData):
+        commentDataDict = commentData.model_dump()
+        commentDataDict.update({"time": PostServ.getTimeNow(), "time_diff": None})
+        minimal_user.update({"comment": commentDataDict})
         self.comments.append(minimal_user)
+        self.comments_count += 1
         self._p_changed = True
 
     def set_share(self, link):
