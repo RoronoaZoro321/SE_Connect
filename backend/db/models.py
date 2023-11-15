@@ -1,3 +1,4 @@
+import copy
 import persistent
 from backend.services.Post import PostServ
 
@@ -152,7 +153,13 @@ class Post(persistent.Persistent):
         return self.likes_count
 
     def get_comments(self):
-        return self.comments
+        for commentsData in self.comments:
+            comment = commentsData["comment"]
+            comment["time_diff"] = PostServ.getTimeDifference(comment["time"])
+            
+        reversed = copy.deepcopy(self.comments)
+        reversed.reverse()
+        return reversed
 
     def get_comments_count(self):
         return self.comments_count

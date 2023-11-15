@@ -30,7 +30,9 @@ class PostServ:
             if posts is None:
                 raise HTTPException(status_code=400, detail="No posts found")
 
-            return posts.values()
+            reversed = list(posts.values())
+            reversed.reverse()
+            return reversed
         except Exception as e:
             print(e)
 
