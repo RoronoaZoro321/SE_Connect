@@ -15,14 +15,38 @@ ul{
     list-style: none;
 }
 
+.welcome{
+    float: left;
+}
+
+/* .home_page {
+   
+} */
+
+.home_page h1{
+    z-index: 4;
+    color: #1F1717;
+    font-size: 100px;
+}
+
+.home_page img{
+    width: 1470px; 
+    height: 852px;
+    z-index: -10;
+    background-size: cover;
+    background-position: cover; 
+}
+
 a{
     text-decoration: none;
 }
 
+
 header{
     position: sticky;
     top: 0px;
-    background-color: #3C486B;
+    background-color: #262e44;
+    /* background-color: #F45050; */
     width: 100%;
     height: 100px;
     z-index: 1000;
@@ -81,7 +105,7 @@ section{
 
 .logo{
     color: #F9D949;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
