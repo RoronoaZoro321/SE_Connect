@@ -14,7 +14,7 @@
 
 .friend_list {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     margin-top: 30px;
     padding-left: 50px;
     width: 70%;
@@ -26,6 +26,7 @@
 .friend_list a{
     color: #3C486B;
     line-height: 2;
+    margin: 5px;
 }
 
 .friend_list ul{
@@ -33,6 +34,14 @@
     font-size: 20px;
 }
 
+.friend_list li{
+
+    width: 670px;
+}
+
+.friend-list .left_text{
+    margin-right: 80px;
+}
 .friend_name{
     line-height: 4;
 }
@@ -40,16 +49,21 @@
 .friend_name a{
     color: #3C486B;
     font-size: 20px;
+    width: 100px;
 }
 
 .aa {
     display: inline;
-    width: 40%;
+    width: 200px !important;
+    min-width: 200px;
+    box-sizing: border-box;
+    float: left;
 }
 
 .bb {
     display: inline;
     width: 20%;
+    float: right;
     /* justify-content: end;
     align-items: end; */
 }

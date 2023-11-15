@@ -177,10 +177,17 @@ section{
     opacity: 0;
     pointer-events: none;
     transition: .5s;
+    height: 99.5px;
+}
+
+.dropdown-link{
+    height: 33.5px;
 }
 
 .dropdown ul{
     position: relative;
+    height: 99.5px;
+
 }
 
 .dropdown-link > a{
@@ -190,6 +197,7 @@ section{
     padding: .5rem 1rem;
     font-size: .9rem;
     align-items: center;
+    height: 100%;
     /* justify-content: space-between; */
     /* transition: .3s; */
     /* border: solid 1px #F9D949; */
@@ -201,8 +209,8 @@ section{
     color: #1F1717;
 }
 
-.dropdown-link:not(:nth-last-child(2)){
-    border-bottom: 1px solid #FCF5ED;
+.dropdown-link li{
+    height: 33px;
 }
 
 .dropdown-link i{
