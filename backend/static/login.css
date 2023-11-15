@@ -22,7 +22,6 @@ h2 {
 }
 
 input {
-    filter: drop-shadow(0px 4px 4px #3C486B);
     width: 75%;
     height: 30px;
     padding: 8px;
@@ -30,7 +29,7 @@ input {
     font-size: 16px;
     background-color: #F0F0F0;
     color: #3C486B;
-    
+    filter: drop-shadow(0px 4px 4px #3C486B);
 }
 
 .forget-password {

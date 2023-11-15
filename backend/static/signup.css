@@ -21,15 +21,15 @@ body {
 }
 
 input {
-    filter: drop-shadow(0px 2px 2px #3C486B);
     width: 400px;
     height: 30px;
     padding: 8px;
     margin: 10px;
     font-size: 16px;
-    background-color: #3C486B;
-    color: #F9D949;
     border-radius: 5px;
+    background-color: #F0F0F0;
+    color: #3C486B;
+    filter: drop-shadow(0px 4px 4px #3C486B);
 }
 
 button {
