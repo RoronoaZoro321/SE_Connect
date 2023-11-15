@@ -11,8 +11,13 @@
     {% block content %}
     <br>
     <div class="new_post">
+        <div id="imageUploadPreview" style="display: none;"></div>
+        <br>
+        <button id="removeImageUploadPreviewButton" onclick="toggleImagePreview()" style="display: none;">Remove image</button>
         <form id="newPostForm">
             <div class="col">
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" hidden>
+                <label for="imageUpload" id="imageUploadLabel">Upload Image</label>
                 <div class="col-1">
                     <textarea class="message" type="text" id="message" name="message" cols="30" rows="10"
                         style="resize: none; overflow-y:hidden;" spellcheck="false" required></textarea>

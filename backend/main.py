@@ -3,7 +3,7 @@ import ZODB.FileStorage
 import transaction
 import BTrees.OOBTree
 import logging
-from fastapi import FastAPI, Request, HTTPException, Depends, Form, Response, Cookie
+from fastapi import FastAPI, Request, HTTPException, Depends, Form, Response, Cookie, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -14,7 +14,7 @@ from backend.apis.base import api_router
 from backend.db.models import User, Post, StartUpPost
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
-from backend.models.base import CommentData, LoginData, PostData, SignupData, UserProfileData, AddFriendData, PostInteractData, AddStartUpData
+from backend.models.base import CommentData, LoginData, SignupData, UserProfileData, AddFriendData, PostInteractData, AddStartUpData
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -129,9 +129,8 @@ def getUserProfileFromOther(request: Request, id: int, sessionId: Annotated[str 
 
 
 @app.post("/api/newPost", tags=["API"])
-def createPost(response: Response, postData: PostData, sessionId: Annotated[str | None, Cookie()] = None):
+def createPost(response: Response, text: Annotated[str, Form()], image: UploadFile | None = None, sessionId: Annotated[str | None, Cookie()] = None):
     try:
-
         user = UserServ.getUserFromSession(sessionId, root)
         if user:
             user_id = user.get_student_id()
@@ -144,7 +143,11 @@ def createPost(response: Response, postData: PostData, sessionId: Annotated[str 
                 raise HTTPException(
                     status_code=400, detail="This ID already exists")
 
-            new_post = Post(post_id, user_id, username, postData.content)
+            if image:
+                print("filename", image.filename)
+            else:
+                print("no file")
+            new_post = Post(post_id, user_id, username, text)
             user.add_post(new_post)
             root.posts[post_id] = new_post
             transaction.commit()

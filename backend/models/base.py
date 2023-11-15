@@ -19,10 +19,6 @@ class UserProfileData(BaseModel):
     description: str
 
 
-class PostData(BaseModel):
-    content: str
-
-
 class AddFriendData(BaseModel):
     friend_id: int
 

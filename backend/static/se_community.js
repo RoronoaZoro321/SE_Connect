@@ -16,21 +16,57 @@ function start() {
         event.preventDefault()
 
         const message = document.getElementById("message").value
+        const imageFiles = document.getElementById('imageUpload').files;
+        const formData = new FormData()
+        formData.append("text", message)
+        if (imageFiles.length !== 0) formData.append("image", imageFiles[0])
+        
+        
         const postResponse = await fetch("/api/newPost", {
             method: "POST",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ content: message })
+            body: formData
         })
-
+        
         if (postResponse.status == 200) {
             location.reload()
         } else {
-            console.log("status code" + postResponse.status);
+            console.error("Error: " + await postResponse.text())
+            console.error("status code" + postResponse.status);
         }
     })
+
+    // Show image preview
+    const inputFile = document.getElementById('imageUpload');
+
+    inputFile.addEventListener('change', async function () {
+        const file = document.querySelector('#imageUpload').files;
+        const img = await convert_to_base64(file[0]);
+        toggleImagePreview(img)
+    })
+
+    const convert_to_base64 = file => new Promise((response) => {
+        const file_reader = new FileReader();
+        file_reader.readAsDataURL(file);
+        file_reader.onload = () => response(file_reader.result);
+    });
+
+}
+
+function toggleImagePreview(img) {
+    const imgPreviewDiv = document.getElementById("imageUploadPreview")
+    const removeImgButton = document.getElementById("removeImageUploadPreviewButton")
+    if (img) {
+        imgPreviewDiv.style.cssText = ""
+        removeImgButton.style.cssText = ""
+        imgPreviewDiv.style.backgroundImage = `url(${img})`
+    } else {
+        imgPreviewDiv.style.cssText = "display: none;"
+        removeImgButton.style.cssText = "display: none;"
+        document.querySelector('#imageUpload').value = "";
+    }
 }
 
 function like(postId) {
@@ -93,8 +129,6 @@ function comment(postId, username) {
 
         const message = await res.json();
         if (res.status == 200) {
-            console.log(message);
-
             // Update DOM
             document.getElementById(`commentForm${postId}`).value = ""
             toggleCommentForm(postId)
