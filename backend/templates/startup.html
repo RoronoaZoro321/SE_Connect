@@ -21,17 +21,30 @@
     self.enrolls = [] -->
 
     {% for post in data %}
-        <p>
-        <a href="/startup/{{post.id}}">{{post.title}}</a>
-        {% for skill in post.skills %}
-            <a href="/startup/{{post.id}}">{{skill.title}}</a>
-        {% endfor %}
-        </p>
+        <div class="new_work_cover">
+            <div class="project_name">
+                <p>
+                    <span style="font-weight: 700;">Project name : </span>
+                    {{post.title}}
+                </p>
+                <!--{{post.title}}-->
+                <!-- {% for skill in post.skills %}
+                    <a href="/startup/{{post.id}}">{{skill.title}}</a>
+                {% endfor %} -->
+            </div>
+            <div class="detail">
+                <a href="/startup/{{post.id}}">View Project Detail</a>
+            </div>
+        </div>
     {% endfor %}
-
-    <h2>Find right person for your work</h2>
-    <p><a href="/startupAdd">Click here</a></p>
-    <p><a href="/viewMyStartUpPostedList">View my Posted List</a></p>
-
+    <div class="add_work">
+        <p><a href="/startupAdd">Add work space</a></p>
+    </div>
+    <!-- <div class="add_work">
+        <p><a href="/startupAdd">Click here</a></p> -->
+    
+    <div class="view_detail">
+        <p><a href="/viewMyStartUpPostedList">View my Posted List</a></p>
+    </div>
     {% endblock %}
 </body>

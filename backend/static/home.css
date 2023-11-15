@@ -7,11 +7,11 @@
 }
 
 #cursorText {
-    font-size: 150px;
+    font-size: 100px;
     color: #F45050;
     opacity: 0;
     transform: translateY(20px);
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), 5px 5px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), 5px 5px 8px rgba(0, 0, 0, 0.4);
     animation: fadeInUp 4s ease-out forwards;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */

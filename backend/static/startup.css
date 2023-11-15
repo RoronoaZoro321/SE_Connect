@@ -1,0 +1,94 @@
+h1 {
+    margin-top: 40px;
+    margin-bottom: 25px;
+    font-size: 40px;
+    text-align: center;
+    color: #3C486B;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-bottom: 30px;
+    color: #3C486B;
+}
+
+.new_work_cover {
+    display: flex;
+    flex-direction: row;
+}
+
+.project_name {
+    width: 77%;
+    margin-left: 80px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: solid 2px #000000;
+    background-color: #F9D949;
+    color: #000000;
+}
+
+.detail {
+    /* width: 50px; */
+    margin-left: 0px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border: solid 2px black;
+    background-color: #F45050;
+}
+
+.detail:hover {
+    background-color: #cd0000;
+}
+
+.detail a{
+    color: #F0F0F0;
+}
+
+.add_work p{
+    display: flex;
+    padding: 15px;
+    width: fit-content;
+    flex-direction: row;
+    border: solid 3px black;
+    border-radius: 30px;
+    font-size: 17px;
+    margin-left: 1210px;
+    margin-top: 100px;
+    color: #3C486B;
+    background-color: #F9D949;
+}
+
+.add_work p:hover{
+    background-color: #F45050;
+}
+
+.add_work a{
+    color: #3C486B;
+    font-weight: 600;
+}
+
+
+.view_detail p{
+    display: flex;
+    padding: 15px;
+    width: fit-content;
+    flex-direction: row;
+    border: solid 3px black;
+    border-radius: 30px;
+    font-size: 17px;
+    margin-left: 1180px;
+    margin-top: 15px;
+    color: #3C486B;
+    background-color: #F9D949;
+}
+
+.view_detail p:hover{
+    background-color: #F45050;
+}
+
+.view_detail a{
+    color: #3C486B;
+    font-weight: 600;
+}
+
