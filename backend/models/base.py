@@ -33,7 +33,7 @@ class PostInteractData(BaseModel):
     post_id: int
 
 class CommentData(BaseModel):
-    comment: str
+    text: str
 
 class Skill(BaseModel):
     title: str
