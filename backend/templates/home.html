@@ -10,7 +10,9 @@
 <body>
     {% block content %}
     <div class="home_page">
-        <h1>Welcome to SE Connect</h1>
+        <h1 id="cursorText">Welcome to SE Connect!</h1>
     </div>
+    <div class="firework-container" id="fireworkContainer"></div>
+    <script src="{{ url_for('static', path='home.js') }}"></script>
     {% endblock %}
 </body>
