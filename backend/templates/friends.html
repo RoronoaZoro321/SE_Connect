@@ -19,8 +19,12 @@
                             <a href="/userProfileFromOther/{{ data.friends_id[i] }}">{{ data.usernames[i] }}</a>
                         </div>
                         <div class="bb">
-                            <a href="/removeFriend/{{ data.friends_id[i] }}"><span>&#128465;</span></a>
-                            <a href="mailto:{{ data.friends_id[i] }}@kmitl.ac.th"><span>&#128233;</span></a>
+                            <a href="/removeFriend/{{ data.friends_id[i] }}"><span>
+                                <img src="{{ url_for('static', path='images/dusbin2.png') }}" style="margin-bottom: -5%;" width="30" height="30" alt="">
+                            </span></a>
+                            <a href="mailto:{{ data.friends_id[i] }}@kmitl.ac.th"><span>
+                                <img src="{{ url_for('static', path='images/mail.png') }}" style="margin-bottom: -5%;" width="30" height="30" alt="">
+                            </span></a>
                         </div>
                     </li>
                 {% endfor %}
