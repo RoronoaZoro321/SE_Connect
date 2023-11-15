@@ -1,0 +1,104 @@
+h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px;
+    color: #3C486B;
+}
+
+.first {
+    margin-top: 50px;
+}
+
+.a {
+    margin-left: 100px;
+    margin-bottom: 30px;
+}
+
+.b {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+}
+
+.a label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.b label {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.a input {
+    font-size: 18px;
+    border: solid 1px black;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.b textarea {
+    width: 500px;
+    height: 80px;
+    font-size: 18px;
+    border: solid 1px black;
+    padding: 10px;
+    margin-left: 0px;
+    margin-top: 15px;
+}
+
+.idea_form h2{
+    font-size: 28px;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+.second {
+    margin-top: 50px;
+}
+
+.c {
+    margin-left: 100px;
+    margin-bottom: 30px;
+}
+
+.d {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+}
+
+.c label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.d label {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.c input {
+    font-size: 18px;
+    border: solid 1px black;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.d textarea {
+    width: 500px;
+    height: 80px;
+    font-size: 18px;
+    border: solid 1px black;
+    padding: 10px;
+    margin-left: 0px;
+    margin-top: 15px;
+}
+
+.idea_form p button{
+    font-size: 20px;
+}
+
+
