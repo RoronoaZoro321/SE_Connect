@@ -33,7 +33,7 @@
         <p>HELLO</p>
     </div> -->
     {% for post in posts %}
-    <div class="post">
+    <div class="post" id="post{{ post.get_id() }}">
         <p>{{ post.get_username() }}
             <span class="time">{{ post.get_time_diff() }}</span>
         </p>
