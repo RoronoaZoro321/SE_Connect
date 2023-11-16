@@ -51,8 +51,8 @@
 }
 
 .post_head a {
-    position: fixed;
-    margin-left: 81.5%;
+    position: absolute;
+    margin-left: 81%;
 }
 
 .post_list {
