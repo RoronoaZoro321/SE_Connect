@@ -1,4 +1,6 @@
 import datetime
+import os
+import uuid
 from fastapi import HTTPException
 try:
     from backend.db.models import Post
@@ -64,3 +66,23 @@ class PostServ:
     @staticmethod
     def hasUserLikedPost(post, minimal_user):
         return minimal_user in post.get_likes()
+    
+    @staticmethod
+    def getFileName(path):
+        if not path:
+            return None
+        
+        file_name = os.path.basename(path)
+        print(file_name)
+        return file_name
+    
+    @staticmethod
+    def generateImageUUID(file_name) -> str:
+        _, file_extension = os.path.splitext(file_name)
+
+        if (file_extension):
+            new_file_name = str(uuid.uuid4()) + file_extension
+            return new_file_name
+        else:
+            print("File has no extension")
+            return file_name
