@@ -69,7 +69,7 @@
 }
 
 .react {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .react button {
@@ -127,6 +127,7 @@ textarea {
 
 .time {
     color: #F45050;
+    padding-left: 10px;
 }
 
 #imageUploadLabel {
