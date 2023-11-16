@@ -3,3 +3,5 @@ backend/db/db.fs
 backend/db/db.fs.index
 backend/db/db.fs.lock
 backend/db/db.fs.tmp
+
+backend/static/images/post
