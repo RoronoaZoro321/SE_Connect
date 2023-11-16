@@ -104,14 +104,15 @@ class User(persistent.Persistent):
 
 
 class Post(persistent.Persistent):
-    def __init__(self, id: int, user_id: int, username: str, content: str):
+    def __init__(self, id: int, user_id: int, username: str, text: str, image_path: str | None = None):
         self.id = id
         self.time = PostServ.getTimeNow()
         self.time_diff = None
         self.user_id = user_id
         self.username = username
-        self.content = content
-        self.image = ""
+        self.text = text
+        self.image_path = image_path
+        self.image_name = PostServ.getFileName(image_path)
         self.likes = []
         self.likes_count = 0
         self.comments = []
@@ -119,13 +120,13 @@ class Post(persistent.Persistent):
         self.share = None
 
     def __str__(self):
-        return f"Post: {self.id} {self.user_id} {self.content}"
+        return f"Post: {self.id} {self.user_id} {self.text}"
 
     def print_post(self):
         print(self.__str__())
 
-    def set_content(self, content: str):
-        self.content = content
+    def set_text(self, text: str):
+        self.text = text
 
     def get_id(self):
         return self.id
@@ -143,9 +144,15 @@ class Post(persistent.Persistent):
     def get_username(self):
         return self.username
     
-    def get_content(self):
-        return self.content
+    def get_text(self):
+        return self.text
+    
+    def get_image_path(self):
+        return self.image_path
 
+    def get_image_name(self):
+        return self.image_name
+    
     def get_likes(self):
         return self.likes
     
