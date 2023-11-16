@@ -39,7 +39,7 @@
 }
 
 .new_post {
-    background-color: #fff;
+    background-color: #3C486B;
     border: 1px solid #dddfe2;
     border-radius: 8px;
     padding: 15px;
@@ -47,11 +47,12 @@
 }
 
 .post {
-    background-color: #fff;
+    background-color: #3C486B;
     border: 1px solid #dddfe2;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
+    color: #dddfe2;
 }
 
 .post p {
@@ -166,7 +167,7 @@ textarea {
 }
 
 .userLink {
-    color: #637dc4;
+    color: #F9D949;
     font-weight: 550;
 }
 
