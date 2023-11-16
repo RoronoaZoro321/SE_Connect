@@ -47,6 +47,15 @@
     margin-bottom: 20px;
 }
 
+textarea.message {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #dddfe2;
+    border-radius: 5px;
+    resize: none;
+}
+
 .post {
     background-color: #3C486B;
     border: 1px solid #dddfe2;
@@ -87,17 +96,20 @@
 
 .react button {
     display: inline-block;
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px;
+    /* Adjust the margin as needed */
 }
 
 .react .col {
     display: inline-block;
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px;
+    /* Adjust the margin as needed */
 }
 
 .react .toolTip {
     display: inline-block;
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px;
+    /* Adjust the margin as needed */
 }
 
 .react p
@@ -139,8 +151,8 @@ li {
     margin-bottom: 10px;
 }
 
-.commentForm,
-textarea {
+textarea.commentForm {
+    height: 30px;
     width: 100%;
     padding: 8px;
     margin-top: 5px;

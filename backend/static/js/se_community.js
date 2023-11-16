@@ -30,13 +30,29 @@ function start() {
     // Auto adjust new-post form text area height
     const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
-        tx[i].setAttribute("style", tx[i].style.cssText + "height:" + (tx[i].scrollHeight) + "px");
+        tx[i].defaultHeight = tx[i].offsetHeight
+
+        if (!tx[i].scrollHeight) {
+            tx[i].hasScrollHeight = false
+            tx[i].setAttribute("style", tx[i].style.cssText + "height:" + tx[i].style.height);
+        } else {
+            tx[i].hasScrollHeight = true
+            tx[i].setAttribute("style", tx[i].style.cssText + "height:" + (tx[i].scrollHeight) + "px");
+        }
         tx[i].addEventListener("input", OnInput, false);
     }
 
-    function OnInput() {
-        this.style.height = 0;
-        this.style.height = (this.scrollHeight) + "px";
+    function OnInput(evt) {
+        this.style.height = evt.currentTarget.defaultHeight + "px";
+
+        if (this.hasScrollHeight) {
+            if (this.scrollHeight >= parseInt(this.style.height)) this.style.height = (this.scrollHeight) + "px";
+        } else {
+            if (this.scrollHeight != 0) {
+                if (this.scrollHeight >= parseInt(this.style.height)) this.style.height = (this.scrollHeight) + "px";
+            }
+        }
+
     }
 
     document.getElementById("newPostForm").addEventListener("submit", async (event) => {
@@ -105,12 +121,12 @@ function like(postId) {
             },
             credentials: "include"
         });
-        
+
         if (res.status == 200) {
             const message = await res.json();
             const likeNum = document.getElementById(`likeNum${postId}`)
             const likeButton = document.getElementById(`likeButton${postId}`)
-            const staticImagesPath = document.location.origin + "/static/images" 
+            const staticImagesPath = document.location.origin + "/static/images"
 
             if (message.data == "like") {
                 const imagePath = staticImagesPath + "/liked.png"
