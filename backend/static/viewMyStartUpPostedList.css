@@ -51,12 +51,13 @@
 }
 
 .post_head a {
-    margin-left: 10px;
+    position: fixed;
+    margin-left: 81.5%;
 }
 
-/* .post_list {
+.post_list {
     margin-bottom: 5%;
-} */
+}
 
 .post_list h3 {
     color: #F45050;
@@ -80,6 +81,3 @@
     margin-right: 20px;
 }
 
-/* .post_list p a img:hover {
-    <img src="{{ url_for('static', path='images/contact2.png') }}" width="30" height="40" alt="">
-} */
