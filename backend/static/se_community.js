@@ -13,13 +13,18 @@ function start() {
         const overlay = document.getElementById("overlay")
 
         // Scroll to view
+        // hashElement.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
         hashElement.scrollIntoView(true)
 
         // Scroll more
         overlay.scrollBy(0, -100)
+        // setTimeout(() => { overlay.scrollBy({ behavior: "smooth", top: "-100" }) }, 100)
+        // overlay.scrollBy({behavior: "smooth", top: "-100"})
 
         // Highlight post
-        
+        hashElement.style.cssText = "box-shadow: 0px 0px 10px blue; border: 1px solid blue; transition: 1s"
+        setTimeout(() => { hashElement.style.cssText = "transition: 1s" }, 1000)
+        setTimeout(() => { hashElement.style.cssText = "" }, 2000)
     }
 
     const tx = document.getElementsByTagName("textarea");
