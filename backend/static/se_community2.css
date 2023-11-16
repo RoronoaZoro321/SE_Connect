@@ -1,10 +1,40 @@
 /* General Styles */
 
-.wholeContent{
+.wholeContent {
     padding-top: 50px;
     max-width: 60%;
     margin-bottom: 10%;
     margin: 0 auto;
+}
+
+/* Image Upload Preview Styles */
+
+#imageUploadPreview {
+    width: 100%;
+    /* max-height: 1000px; Set a maximum height to control the size of the preview */
+    /* margin-top: 10px; */
+    margin: 0 auto;
+    min-height: 400px;
+    padding-top: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#removeImageUploadPreviewButton {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#removeImageUploadPreviewButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .new_post {
@@ -49,10 +79,12 @@ button {
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #3C486B;
+    background-color: #2b3755;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Comments Styles */
@@ -74,6 +106,35 @@ textarea {
     border: 1px solid #dddfe2;
     border-radius: 5px;
     resize: none;
+}
+
+.time {
+    color: #F45050;
+}
+
+#imageUploadLabel {
+    background-color: #1877f2;
+    color: #fff;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#imageUpload {
+    display: none; /* Hide the actual file input */
+}
+
+#imageUploadLabel:hover {
+    background-color: #1465c0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.userLink {
+    color: #637dc4;
+    font-weight: 550;
 }
 
 /* Media Queries */

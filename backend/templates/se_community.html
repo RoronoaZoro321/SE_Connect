@@ -29,12 +29,9 @@
             </form>
         </div>
         <br>
-        <!-- <div class="add_friend">
-            <p>HELLO</p>
-        </div> -->
         {% for post in posts %}
         <div class="post" id="post{{ post.get_id() }}">
-            <p> <a href="/userProfileFromOther/{{ post.get_user_id() }}">{{ post.get_username() }}</a>
+            <p> <a class="userLink" href="/userProfileFromOther/{{ post.get_user_id() }}">{{ post.get_username() }}</a>
                 <span class="time">{{ post.get_time_diff() }}</span>
             </p>
             <div class="content">
@@ -46,8 +43,8 @@
             <div class="react">
                 <!-- <p>Likes: </p> -->
                 <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})" class="like">
-                    {% if has_liked(post, minimal_user)%} Unlike
-                    {% else %} Like
+                    {% if has_liked(post, minimal_user)%} <img src="{{ url_for('static', path='images/liked.png') }}" width="15" alt="Post Image">
+                    {% else %} <img src="{{ url_for('static', path='images/like.png') }}" width="15" alt="Post Image">
                     {% endif %}
                 </button>
                 <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
