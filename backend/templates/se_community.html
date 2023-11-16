@@ -34,7 +34,7 @@
         </div> -->
         {% for post in posts %}
         <div class="post" id="post{{ post.get_id() }}">
-            <p>{{ post.get_username() }}
+            <p> <a href="/userProfileFromOther/{{ post.get_user_id() }}">{{ post.get_username() }}</a>
                 <span class="time">{{ post.get_time_diff() }}</span>
             </p>
             <div class="content">

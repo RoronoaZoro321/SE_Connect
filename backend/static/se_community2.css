@@ -1,8 +1,9 @@
 /* General Styles */
 
 .wholeContent{
-    padding-top: 100px;
+    padding-top: 50px;
     max-width: 60%;
+    margin-bottom: 10%;
     margin: 0 auto;
 }
 
