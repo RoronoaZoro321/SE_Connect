@@ -3,7 +3,7 @@
 <head>
     {% block head %}
     {{ super() }}
-    <link href="{{ url_for('static', path='startupAdd.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', path='css/startupAdd.css') }}" rel="stylesheet" type="text/css">
     {% endblock %}
 </head>
 
@@ -60,6 +60,6 @@
             <h4 id="error-message" style="color: #F45050; text-align:center;"></h4>
         </div>
     </form>
-    <script src="{{ url_for('static', path='startUpAdd.js') }}"></script>
+    <script src="{{ url_for('static', path='js/startUpAdd.js') }}"></script>
     {% endblock %}
 </body>

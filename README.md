@@ -1,18 +1,37 @@
 # dependency neccessary
-pip install fastapi uvicorn[standard] zodb jinja2
+pip install -r requirements.txt
 
 # to run the project
-run main.py
+python main.py
 
 # Project Structure
-Web_project/
+SE_CONNECT/
 │
-├── app/
-│   ├── __init__.py
-│   ├── main.py  # FastAPI application
-│   ├── models.py  # Define data models
-│   ├── routes.py  # Define API routes
+├── backend/
+│   ├── core
+│   │   ├── config.py
+│   │ 
+│   ├── db
+│   │   ├── models.py
+│   │ 
+│   ├── models
+│   │   ├── base.py
+│   │ 
+│   ├── services
+│   │   ├── Post.py
+│   │   ├── User.py
 │
+│
+│
+├── requirements.txt
+├── README.md
+├── main.py  # Uvicorn entry point
+
+
+
+
+
+
 ├── static/
 │   ├── css/
 │   │   ├── main.css
@@ -26,10 +45,3 @@ Web_project/
 │   ├── login.html
 │   ├── signup.html
 │   ├── friends.html
-│
-├── zodb-data/
-│   ├── myfacebook.fs  # ZODB database file
-│
-├── requirements.txt
-├── README.md
-├── main.py  # Uvicorn entry point

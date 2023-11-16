@@ -12,7 +12,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from typing import Annotated
 
 from backend.core.config import settings
-from backend.apis.base import api_router
 from backend.db.models import User, Post, StartUpPost
 from backend.services.User import UserServ
 from backend.services.Post import PostServ
@@ -22,7 +21,7 @@ from backend.models.base import CommentData, LoginData, SignupData, UserProfileD
 logging.basicConfig(level=logging.DEBUG)
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
-app.include_router(api_router)
+
 app.mount("/static", app=StaticFiles(directory="backend/static"), name="static")
 
 templates = Jinja2Templates(directory="backend/templates")

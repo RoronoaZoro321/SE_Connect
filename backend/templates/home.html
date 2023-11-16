@@ -3,7 +3,7 @@
 <head>
     {% block head %}
     {{ super() }}
-    <link href="{{ url_for('static', path='home.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', path='css/home.css') }}" rel="stylesheet" type="text/css">
     {% endblock %}
 </head>
 
@@ -13,6 +13,6 @@
         <h1 id="cursorText">Welcome to SE Connect!</h1>
     </div>
     <div class="firework-container" id="fireworkContainer"></div>
-    <script src="{{ url_for('static', path='home.js') }}"></script>
+    <script src="{{ url_for('static', path='js/home.js') }}"></script>
     {% endblock %}
 </body>
