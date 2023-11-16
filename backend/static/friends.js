@@ -1,5 +1,12 @@
 console.log("friends.js loaded");
 
+// Disable scrolling on number input
+document.addEventListener("wheel", function(event){
+    if(document.activeElement.type === "number"){
+        document.activeElement.blur();
+    }
+});
+
 document.getElementById('friends-form').addEventListener('submit', async (event) => {
     event.preventDefault();
   
