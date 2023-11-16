@@ -27,6 +27,7 @@ function start() {
         setTimeout(() => { hashElement.style.cssText = "" }, 2000)
     }
 
+    // Auto adjust new-post form text area height
     const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
         tx[i].setAttribute("style", tx[i].style.cssText + "height:" + (tx[i].scrollHeight) + "px");
@@ -104,19 +105,32 @@ function like(postId) {
             },
             credentials: "include"
         });
-
+        
         if (res.status == 200) {
             const message = await res.json();
             const likeNum = document.getElementById(`likeNum${postId}`)
             const likeButton = document.getElementById(`likeButton${postId}`)
+            const staticImagesPath = document.location.origin + "/static/images" 
 
             if (message.data == "like") {
+                const imagePath = staticImagesPath + "/liked.png"
                 likeNum.innerText = parseInt(likeNum.innerText) + 1
-                likeButton.innerText = "Unlike"
+
+                const unlikeImage = document.createElement("img")
+                unlikeImage.width = 15
+                unlikeImage.alt = "Post Image"
+                unlikeImage.src = imagePath
+                likeButton.replaceChildren(unlikeImage)
             }
             else if (message.data == "unlike") {
+                const imagePath = staticImagesPath + "/like.png"
                 likeNum.innerText = parseInt(likeNum.innerText) - 1
-                likeButton.innerText = "Like"
+
+                const likeImage = document.createElement("img")
+                likeImage.width = 15
+                likeImage.alt = "Post Image"
+                likeImage.src = imagePath
+                likeButton.replaceChildren(likeImage)
             }
             else console.log("Error: Unknown message data type in like func");
         }
