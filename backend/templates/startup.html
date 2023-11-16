@@ -23,14 +23,10 @@
     {% for post in data %}
         <div class="new_work_cover">
             <div class="project_name">
-                <p>
-                    <span style="font-weight: 700;">Project name : </span>
-                    {{post.title}}
-                </p>
-                <!--{{post.title}}-->
-                <!-- {% for skill in post.skills %}
-                    <a href="/startup/{{post.id}}">{{skill.title}}</a>
-                {% endfor %} -->
+                <b style="margin-right: 20px;">{{post.title}}</b>
+                    {% for skill in post.skills %}
+                        <i style="color: #3C486B; margin-left: 15px;">{{skill.title}}</i>
+                    {% endfor %}
             </div>
             <div class="detail">
                 <a href="/startup/{{post.id}}">View Project Detail</a>
