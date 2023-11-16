@@ -6,6 +6,7 @@
     margin-bottom: 20%;
     padding-bottom: 100px;
     margin: 0 auto;
+    font-size: 19px;
 }
 
 /* Image Upload Preview Styles */
@@ -60,12 +61,16 @@
 }
 
 .content {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
+
 
 .post_image img {
     max-width: 100%;
     border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 .react {
@@ -87,12 +92,22 @@
     margin-right: 10px; /* Adjust the margin as needed */
 }
 
+.react p
+{
+    margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.react li
+{
+    margin-top: 30px; /* Adjust the margin as needed */
+}
+
 /* Buttons Styles */
 
 button {
-    background-color: #3C486B;
+    /* background-color: #3C486B;
     color: #fff;
-    border: none;
+    border: none; */
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 5px;
@@ -101,6 +116,7 @@ button {
 
 button:hover {
     background-color: #2b3755;
+    color: #dddfe2;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
