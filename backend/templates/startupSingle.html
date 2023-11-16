@@ -18,36 +18,38 @@
     self.skills = []
     self.enrolls = [] -->
 
-    <div class="title">
-        <h1>{{data.title}}</h1>
-        <h4>Created by : </h4>
-        <p><span>ID :</span> {{data.user_id}}</p> 
-        <p><span>Username :</span> {{data.username}}</p>
-        <h4>Description :</span></h4>
-        <p class="description_"> {{data.description}} </p>
-    </div>
-
-    {% for skill in data.skills %}
-        <br>
-        <div class="skill">
-            <h4>Required skill : <span>{{skill.title}}</span></h4>
-            <h4>Description : </span></h4>
-            <p class="description_"> {{skill.description}} </p>
+    <div class="block">
+        <div class="title">
+            <h1>{{data.title}}</h1>
+            <h4>Created by : </h4>
+            <p><span>ID :</span> {{data.user_id}}</p> 
+            <p><span>Username :</span> {{data.username}}</p>
+            <h4>Description :</span></h4>
+            <p class="description_"> {{data.description}} </p>
         </div>
-        <br>
-    {% endfor %}
-
-    <div class="bottom_box">
-        <p><a href="/startup/enrolls/{{data.id}}">Enrolls</a></p>
-        <p><a href="/startup">back</a></p>
-        <div class="error-message">
-            {% if error %}
-                <p style="color: red;">{{error}}</p>
-            {% else %}
-                <p style="color:green;">{{success}}</p>
-            {% endif %}
+    
+        {% for skill in data.skills %}
+            <br>
+            <div class="skill">
+                <h4>Required skill : <span>{{skill.title}}</span></h4>
+                <h4>Description : </span></h4>
+                <p class="description_"> {{skill.description}} </p>
+            </div>
+            <br>
+        {% endfor %}
+    
+        <div class="bottom_box">
+            <p><a href="/startup/enrolls/{{data.id}}">Enrolls</a></p>
+            <p><a href="/startup">back</a></p>
+            <div class="error-message">
+                {% if error %}
+                    <p style="color: red;">{{error}}</p>
+                {% else %}
+                    <p style="color:green;">{{success}}</p>
+                {% endif %}
+            </div>
         </div>
-        
+
     </div>
     {% endblock %}
 </body>

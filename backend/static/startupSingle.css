@@ -1,18 +1,32 @@
+.block {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 100px;
+    margin-bottom: 10%;
+    border-radius: 20px;
+    padding-left: 5%;
+    border: solid 5px #F45050;
+    background-color: rgb(252, 237, 221);
+}
+
+.block {
+    font-size: 120%;
+}
+
 .title {
-    margin-left: 100px;
-    margin-top: 50px;
+    margin-top: 20px;
     line-height: 2.5; 
     color: #3C486B;  
 }
 
 .title h1{
-    font-size: 28px;
+    font-size: 45px;
     text-align: center;
     filter: drop-shadow(1px 2px 2px #80879d4d);
 }
 
 .title h4 {
-    font-size: 18px;
+    font-size: 28px;
 }
 
 .title p{
@@ -28,14 +42,13 @@
 }
 
 .skill {
-    margin-left: 100px;
     margin-top: 10px;
     line-height: 2.5;
     color: #3C486B;  
 }
 
 .skill h4 {
-    font-size: 18px;
+    font-size: 25px;
 }
 
 .skill h4 span{
@@ -70,7 +83,7 @@
     padding: 10px;
     color: #F9D949;
     background-color: #F45050;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: 700;
 }
 
@@ -82,3 +95,4 @@
 .bottom_box .error-message p{
     margin-top: 25px;
 }
+
