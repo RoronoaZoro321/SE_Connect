@@ -7,6 +7,7 @@
     padding-left: 5%;
     border: solid 5px #F45050;
     background-color: rgb(252, 237, 221);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 4.9);
 }
 
 .block {
