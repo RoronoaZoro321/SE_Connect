@@ -16,8 +16,9 @@ html, body {
 }
 
 .user-container h1 {
-    margin-bottom: 45px;
-    margin-left: 50px;
+    text-align: center;
+    margin-bottom: 8%;
+    /* margin-left: 50px; */
     color: #3C486B;
     font-size: 60px;
 }
@@ -116,9 +117,9 @@ input[type=number] {
 
 .description {
     background-color: #F45050;
-    width: 395px;
+    width: 380px;
     height: 120px;
-    margin-left: 15px;
+    /* margin-left: 15px; */
     font-size: 20px;
     color: white;
     border-radius: 5px;
@@ -165,6 +166,27 @@ input[type=number] {
 .displayMessage {
     font-size: 25px;
     margin: 20px auto;
+}
+
+.contact_ {
+    text-align: center;
+    padding: 10px;
+    margin-top: 4%;
+    margin-left: 42%;
+    margin-right: 42%;
+    background-color: #0f7044;
+    border: dashed 3px black;
+    border-radius: 20px;
+}
+
+.contact_:hover {
+    background-color: #0a4128;
+}
+
+.contact_ a{
+    color: #F0F0F0;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 
