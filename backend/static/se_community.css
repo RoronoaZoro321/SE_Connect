@@ -64,8 +64,16 @@
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
+    text-align: center;
 }
 
+.content p {
+    text-align: left;
+}
+
+.post_img {
+    margin: 0 auto;
+}
 
 .post_image img {
     max-width: 100%;
