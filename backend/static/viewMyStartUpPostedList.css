@@ -1,4 +1,6 @@
+
 .header {
+    margin-top: 20%;
     margin-top: 50px;
     margin-bottom: 30px;
 }
@@ -27,8 +29,15 @@
 }
 
 .post_list {
-    margin-left: 100px;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-bottom: 7%;
     line-height: 2;
+    border: solid 3px #3C486B;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #F9D949;
 }
 
 .post_head {
@@ -45,8 +54,12 @@
     margin-left: 10px;
 }
 
+/* .post_list {
+    margin-bottom: 5%;
+} */
+
 .post_list h3 {
-    color: #3C486B;
+    color: #F45050;
 }
 
 .post_list p {
