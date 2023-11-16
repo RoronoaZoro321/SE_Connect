@@ -37,12 +37,7 @@
         <p>{{ post.get_username() }}
             <span class="time">{{ post.get_time_diff() }}</span>
         </p>
-        <div class="content">
-            {% if post.get_image_path() %}
-            <div class="post_image"><img src="{{ url_for('static', path='images/post/' + post.get_image_name()) }}" alt="Post Image"></div>
-            {% endif %}
-            <p>{{ post.get_text() }}</p>
-        </div>
+        <p class="content">{{ post.get_content() }}</p>
         <div class="react">
             <!-- <p>Likes: </p> -->
             <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})" class="like">

@@ -3,8 +3,6 @@ import ZODB.FileStorage
 import transaction
 import BTrees.OOBTree
 import logging
-import shutil
-import os
 from fastapi import FastAPI, Request, HTTPException, Depends, Form, Response, Cookie, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -145,27 +143,11 @@ def createPost(response: Response, text: Annotated[str, Form()], image: UploadFi
                 raise HTTPException(
                     status_code=400, detail="This ID already exists")
 
-            image_path = None
             if image:
                 print("filename", image.filename)
-                new_file_name = PostServ.generateImageUUID(image.filename)
-                
-                images_dir = os.path.join(os.getcwd(), "backend\static\images\post")
-                file_path = f"{images_dir}\{new_file_name}"
-                try:
-                    if not os.path.isdir(images_dir): 
-                        os.makedirs(images_dir) 
-    
-                    with open(file_path, "wb+") as file_object:
-                        shutil.copyfileobj(image.file, file_object) 
-
-                    image_path = file_path
-                finally:
-                    image.file.close()
             else:
                 print("no file")
-
-            new_post = Post(post_id, user_id, username, text, image_path)
+            new_post = Post(post_id, user_id, username, text)
             user.add_post(new_post)
             root.posts[post_id] = new_post
             transaction.commit()
