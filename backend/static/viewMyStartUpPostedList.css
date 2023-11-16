@@ -1,0 +1,72 @@
+.header {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    text-align: center;
+    font-size: 36px;
+    color: #3C486B;
+    filter: drop-shadow(1px 4px 2px #3c486b55);
+}
+
+.header p a{
+    border: dashed 3px black;
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 1330px;
+    color: #F9D949;
+    background-color: #F45050;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.header p a:hover {
+    background-color: #F9D949;
+    color: #F45050;
+}
+
+.post_list {
+    margin-left: 100px;
+    line-height: 2;
+}
+
+.post_head {
+    display: flex;
+    flex-direction: row;
+}
+
+.post_head h1 {
+    font-size: 24px;
+    color: #3C486B;
+}
+
+.post_head a {
+    margin-left: 10px;
+}
+
+.post_list h3 {
+    color: #3C486B;
+}
+
+.post_list p {
+    width: 90%;
+    /* border: solid 1px black; */
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.post_list p span{
+    font-weight: 600;
+    color: #F45050;
+}
+
+.post_list p a img{
+    padding-top: 15px;
+    margin-right: 20px;
+}
+
+/* .post_list p a img:hover {
+    <img src="{{ url_for('static', path='images/contact2.png') }}" width="30" height="40" alt="">
+} */

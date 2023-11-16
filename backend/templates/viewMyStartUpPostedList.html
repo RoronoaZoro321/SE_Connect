@@ -18,25 +18,32 @@
     self.skills = []
     self.enrolls = [] -->
 
-    <h1>This is the list of your Post</h1>
+    <div class="header">
+        <h1>This is the list of your Post</h1>
+        <p><a href="/startup">back</a></p>
+    </div>
     <br>
-
-    {% for post in data %}
-        <h1>{{post.title}}</h1>
-        <a href="/deleteStartupPost/{{post.id}}">Delete</a>
-        <h3>Enrolls By:</h3>
-        {% for id in post.enrolls %}
-            <p>  
-            {{id}}
-            <a href="mailto:{{id}}@kmitl.ac.th">Contact</a>
-            </p>
-        {% endfor %} 
-        <br>
-        <br>
-    {% endfor %}
-
     
-    <p><a href="/startup">back</a></p>
-
+    {% for post in data %}
+        <div class="post_list">
+            <div class="post_head">
+                <h1>Project : {{post.title}}</h1>
+                <a href="/deleteStartupPost/{{post.id}}">
+                    <img src="{{ url_for('static', path='images/delete.png') }}" width="17" height="17" alt="">
+                </a>
+            </div>
+            <h3>Enrolls By:</h3>
+            {% for id in post.enrolls %}
+                <p>
+                    <a href="mailto:{{id}}@kmitl.ac.th">
+                        <img src="{{ url_for('static', path='images/contact2.png') }}" width="30" height="40" alt="">
+                    </a>
+                    <span>ID :</span> {{id}}
+                </p>
+            {% endfor %} 
+            <br>
+            <br>
+        </div>
+    {% endfor %}
     {% endblock %}
 </body>
