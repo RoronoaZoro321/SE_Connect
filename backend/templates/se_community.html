@@ -13,7 +13,8 @@
         <div class="new_post">
             <div id="imageUploadPreview" style="display: none;"></div>
             <br>
-            <button id="removeImageUploadPreviewButton" onclick="toggleImagePreview()" style="display: none;">Remove image</button>
+            <button id="removeImageUploadPreviewButton" onclick="toggleImagePreview()" style="display: none;">Remove
+                image</button>
             <form id="newPostForm">
                 <div class="col">
                     <input type="file" id="imageUpload" name="imageUpload" accept="image/*" hidden>
@@ -29,26 +30,27 @@
             </form>
         </div>
         <br>
+
         {% for post in posts %}
         <div class="post" id="post{{ post.get_id() }}">
-            <p> <a class="userLink" href="/userProfileFromOther/{{ post.get_user_id() }}">{{ post.get_username() }}</a>
+            <p><a class="userLink" href="/userProfileFromOther/{{ post.get_user_id() }}">{{ post.get_username() }}</a>
                 <span class="time">{{ post.get_time_diff() }}</span>
             </p>
             <div class="content">
                 {% if post.get_image_path() %}
-                <div class="post_image"><img src="{{ url_for('static', path='images/post/' + post.get_image_name()) }}" alt="Post Image"></div>
+                <div class="post_image"><img src="{{ url_for('static', path='images/post/' + post.get_image_name()) }}"
+                        alt="Post Image"></div>
                 {% endif %}
                 <p>{{ post.get_text() }}</p>
             </div>
             <div class="react">
-                <!-- <p>Likes: </p> -->
                 <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})" class="like">
-                    {% if has_liked(post, minimal_user)%} <img src="{{ url_for('static', path='images/liked.png') }}" width="15" alt="Post Image">
-                    {% else %} <img src="{{ url_for('static', path='images/like.png') }}" width="15" alt="Post Image">
+                    {% if has_liked(post, minimal_user)%} Unlike
+                    {% else %} Like
                     {% endif %}
                 </button>
                 <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
-    
+
                 <p><button onclick="toggleCommentForm({{ post.get_id() }})">Comment</button></p>
                 <div class="col" id="commentFormDiv{{ post.get_id() }}" style="display: none;">
                     <div class="col-1" id="col1{{ post.get_id() }}">
@@ -60,32 +62,80 @@
                         <button onclick="comment({{ post.get_id() }}, '{{ minimal_user.username }}')">Submit</button>
                     </div>
                 </div>
-    
+
+                <div id="toolTip{{ post.get_id() }}" class="toolTip">
+                    <button id="shareButton{{ post.get_id() }}" onclick="share({{ post.get_id() }})"><span
+                            id="toolTipText{{ post.get_id() }}" class="toolTipText">Copied link to
+                            clipboard</span>Share</button>
+                </div>
+
                 {% if post.get_comments_count() != 0 %}
-                <button id="showCommentsButton{{ post.get_id() }}" onclick="toggleShowComments({{ post.get_id() }})">Show Comments</button>
+                <button id="showCommentsButton{{ post.get_id() }}"
+                    onclick="toggleShowComments({{ post.get_id() }})">Show Comments</button>
                 <p><span id="commentsCount{{ post.get_id() }}">{{ post.get_comments_count() }}</span>
                     {% if post.get_comments_count() == 1 %} comment
                     {% else %} comments
                     {% endif %}
                 </p>
-                {% endif %}
-    
-                <ul id="commentsList{{ post.get_id() }}" style="display: none;">
-                    {% if post.get_comments_count() != 0 %}
-                    {% for commentData in post.get_comments() %}
-                    <li>
-                        <p>{{ commentData.username }} <span class="time">{{ commentData.comment.time_diff }}</span> :</p>
-                        <p>{{ commentData.comment.text }}</p>
-                    </li>
-                    {% endfor %}
+                <div class="content">
+                    {% if post.get_image_path() %}
+                    <div class="post_image"><img
+                            src="{{ url_for('static', path='images/post/' + post.get_image_name()) }}" alt="Post Image">
+                    </div>
                     {% endif %}
-                </ul>
+                    <p>{{ post.get_text() }}</p>
+                </div>
+                <div class="react">
+                    <!-- <p>Likes: </p> -->
+                    <button id="likeButton{{ post.get_id() }}" onclick="like({{ post.get_id() }})" class="like">
+                        {% if has_liked(post, minimal_user)%} <img
+                            src="{{ url_for('static', path='images/liked.png') }}" width="15" alt="Post Image">
+                        {% else %} <img src="{{ url_for('static', path='images/like.png') }}" width="15"
+                            alt="Post Image">
+                        {% endif %}
+                    </button>
+                    <span id="likeNum{{ post.get_id() }}">{{ post.get_likes_count() }}</span>
+
+                    <p><button onclick="toggleCommentForm({{ post.get_id() }})">Comment</button></p>
+                    <div class="col" id="commentFormDiv{{ post.get_id() }}" style="display: none;">
+                        <div class="col-1" id="col1{{ post.get_id() }}">
+                            <textarea class="commentForm" type="text" id="commentForm{{ post.get_id() }}"
+                                name="commentForm" cols="20" rows="10" style="resize: none; overflow-y:hidden;"
+                                spellcheck="false" required></textarea>
+                        </div>
+                        <div class="col-2">
+                            <button
+                                onclick="comment({{ post.get_id() }}, '{{ minimal_user.username }}')">Submit</button>
+                        </div>
+                    </div>
+
+                    {% if post.get_comments_count() != 0 %}
+                    <button id="showCommentsButton{{ post.get_id() }}"
+                        onclick="toggleShowComments({{ post.get_id() }})">Show Comments</button>
+                    <p><span id="commentsCount{{ post.get_id() }}">{{ post.get_comments_count() }}</span>
+                        {% if post.get_comments_count() == 1 %} comment
+                        {% else %} comments
+                        {% endif %}
+                    </p>
+                    {% endif %}
+
+                    <ul id="commentsList{{ post.get_id() }}" style="display: none;">
+                        {% if post.get_comments_count() != 0 %}
+                        {% for commentData in post.get_comments() %}
+                        <li>
+                            <p>{{ commentData.username }} <span class="time">{{ commentData.comment.time_diff }}</span>
+                                :</p>
+                            <p>{{ commentData.comment.text }}</p>
+                        </li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    <script src="{{ url_for('static', path='se_community.js') }}"></script>
-    {% endblock %}
+        <script src="{{ url_for('static', path='se_community.js') }}"></script>
+        {% endblock %}
 </body>
 
 </html>

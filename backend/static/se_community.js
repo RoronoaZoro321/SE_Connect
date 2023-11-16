@@ -1,6 +1,27 @@
 document.addEventListener("DOMContentLoaded", start)
 
 function start() {
+    // Scroll to correct section on page reload if has hash
+    const hasHash = Boolean(window.location.hash)
+    if (hasHash) scrollToPost()
+
+    // Scroll to correct section on hash change (no reload)
+    addEventListener("hashchange", (_) => { scrollToPost() })
+
+    function scrollToPost() {
+        const hashElement = document.getElementById(window.location.hash.split("#")[1])
+        const overlay = document.getElementById("overlay")
+
+        // Scroll to view
+        hashElement.scrollIntoView(true)
+
+        // Scroll more
+        overlay.scrollBy(0, -100)
+
+        // Highlight post
+        
+    }
+
     const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
         tx[i].setAttribute("style", tx[i].style.cssText + "height:" + (tx[i].scrollHeight) + "px");
@@ -20,8 +41,8 @@ function start() {
         const formData = new FormData()
         formData.append("text", message)
         if (imageFiles.length !== 0) formData.append("image", imageFiles[0])
-        
-        
+
+
         const postResponse = await fetch("/api/newPost", {
             method: "POST",
             headers: {
@@ -29,7 +50,7 @@ function start() {
             },
             body: formData
         })
-        
+
         if (postResponse.status == 200) {
             location.reload()
         } else {
@@ -175,6 +196,16 @@ function comment(postId, username) {
         }
         else console.error(message)
     })();
+}
+
+function share(postId) {
+    navigator.clipboard.writeText(document.location.host + document.location.pathname + `#post${postId}`);
+
+    const tooltip = document.getElementById(`toolTipText${postId}`);
+    tooltip.style.visibility = "visible"
+    tooltip.style.opacity = 1
+
+    setTimeout(() => { tooltip.style.visibility = "hidden"; tooltip.style.opacity = 0 }, 2000)
 }
 
 function toggleCommentForm(postId) {
