@@ -6,13 +6,18 @@ function addMoreRows() {
     count+=1;
     let ret = 
     `
-        <div id="form-group${count}">
-            <label for="sktitle${count}">Skill Title:</label>
-            <input type="text" id="sktitle${count}" name="sktitle" value="" required>
-        
-            <label for="skdescription${count}">Skill Description:</label>
-            <textarea name="skdescription${count}" id="skdescription${count}" cols="30" rows="4"></textarea>    
-            <button type="button" onclick="removeRow(${count})">Remove</button>
+        <div id="form-group${count}" class="second">
+            <div class="c">
+                <label for="sktitle${count}">
+                Skill Title:</label>
+                <input type="text" id="sktitle${count}" name="sktitle" value="" required>
+            </div>
+            <div class="d">
+                <label for="skdescription${count}">
+                Skill Description:</label>
+                <textarea name="skdescription${count}" id="skdescription${count}" cols="30" rows="4"></textarea>    
+            </div>
+            <button type="button" onclick="removeRow(${count})" >Remove</button>
         </div>
     `
     formInput.insertAdjacentHTML("beforeend", ret);

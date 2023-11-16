@@ -29,7 +29,7 @@
             <div class="post_head">
                 <h1>Project : {{post.title}}</h1>
                 <a href="/deleteStartupPost/{{post.id}}">
-                    <img src="{{ url_for('static', path='images/delete.png') }}" width="17" height="17" alt="">
+                    <img src="{{ url_for('static', path='images/delete.png') }}" width="20" height="20" alt="">
                 </a>
             </div>
             <h3>Enrolls By:</h3>
@@ -41,9 +41,8 @@
                     <span>ID :</span> {{id}}
                 </p>
             {% endfor %} 
-            <br>
-            <br>
         </div>
     {% endfor %}
+        <div style="margin-bottom:7%;"></div>
     {% endblock %}
 </body>
