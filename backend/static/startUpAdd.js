@@ -81,3 +81,9 @@ document.getElementById("form").addEventListener("submit", async (event) => {
         console.error('An error occurred:', error);
     }
   });
+
+// function scrollToBottom() {
+//     window.scrollTo(0, document.body.scrollHeight);
+// }
+
+// window.onload = scrollToBottom;

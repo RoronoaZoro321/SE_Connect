@@ -18,7 +18,10 @@
     self.skills = []
     self.enrolls = [] -->
 
-    <h1>Add a Your startup idea</h1>
+    <div class="header">
+        <h1>Add a Your startup idea</h1>
+        <p><a href="/startup">BACK</a></p>
+    </div>
     <form id="form">
         <div id="form-input" class="idea_form">
             <div class="first">
@@ -47,13 +50,16 @@
                 </div>
             </div>
         </div>
-        <button onclick="addMoreRows()">Add more skills</button>
-        <p><button type="submit">Done</button></p>
-        <h4 id="error-message" style="color: #F45050; text-align:center;"></h4>
+        <div class="add_on_buttons">
+            <div class="e">
+                <button onclick="addMoreRows()">Add more skills</button>
+            </div>
+            <div class="f">
+                <p><button type="submit">DONE</button></p>
+            </div>
+            <h4 id="error-message" style="color: #F45050; text-align:center;"></h4>
+        </div>
     </form>
-
-    <p><a href="/startup">back</a></p>
-
     <script src="{{ url_for('static', path='startUpAdd.js') }}"></script>
     {% endblock %}
 </body>

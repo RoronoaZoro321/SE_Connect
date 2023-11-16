@@ -1,8 +1,31 @@
-h1 {
+.header {
+    /* display: flex;
+    flex-direction: row; */
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
     text-align: center;
-    font-size: 40px;
-    margin-top: 30px;
+    font-size: 36px;
     color: #3C486B;
+    filter: drop-shadow(1px 2px 2px #8ca1e0);
+}
+
+.header p a{
+    border: dashed 3px black;
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 1330px;
+    color: #F9D949;
+    background-color: #F45050;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.header p a:hover {
+    background-color: #F9D949;
+    color: #F45050;
 }
 
 .first {
@@ -24,49 +47,60 @@ h1 {
     font-size: 20px;
     font-weight: 600;
     margin-right: 5px;
+    color: #3C486B;
 }
 
 .b label {
     font-size: 20px;
     font-weight: 600;
+    color: #3C486B;
 }
 
 .a input {
     font-size: 18px;
-    border: solid 1px black;
+    border: solid 3px black;
+    border-radius: 20px;
     padding: 10px;
     margin-left: 10px;
+    background-color: #F9D949;
 }
 
 .b textarea {
     width: 500px;
-    height: 80px;
+    height: 50px;
     font-size: 18px;
-    border: solid 1px black;
+    border: dashed 3px black;
+    border-radius: 20px;
     padding: 10px;
     margin-left: 0px;
     margin-top: 15px;
+    background-color: #F9D949;
 }
 
 .idea_form h2{
-    font-size: 28px;
+    font-size: 26px;
     margin-top: 50px;
     margin-left: 100px;
+    color: #3C486B;
 }
 
 .second {
+    display: flex;
+    flex-direction: row;
     margin-top: 50px;
 }
 
 .c {
     margin-left: 100px;
     margin-bottom: 30px;
+    color: #3C486B;
 }
 
 .d {
     display: flex;
     flex-direction: column;
-    margin-left: 100px;
+    margin-left: 150px;
+    color: #3C486B;
 }
 
 .c label {
@@ -82,23 +116,66 @@ h1 {
 
 .c input {
     font-size: 18px;
-    border: solid 1px black;
     padding: 10px;
     margin-left: 10px;
+    background-color: #F9D949;
+    border: solid 3px black;
+    border-radius: 20px;
 }
 
 .d textarea {
     width: 500px;
-    height: 80px;
+    height: 50px;
     font-size: 18px;
-    border: solid 1px black;
     padding: 10px;
     margin-left: 0px;
     margin-top: 15px;
+    border: dashed 3px black;
+    border-radius: 20px;
+    background-color: #F9D949;
 }
 
 .idea_form p button{
     font-size: 20px;
 }
+
+.add_on_buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 60px;
+}
+
+.e button {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+    color: #F9D949;
+    background-color: #F45050;
+    border: dashed 3px black;
+    border-radius: 20px;
+    margin-left: 580px;
+}
+
+.e button:hover {
+    background-color: #F9D949;
+    color: #F45050;
+}
+
+.f button{
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 30px;
+    padding: 10px;
+    color: #F9D949;
+    background-color: #F45050;
+    border: dashed 3px black;
+    border-radius: 20px;
+}
+
+.f button:hover {
+    background-color: #F9D949;
+    color: #F45050;
+}
+
 
 
