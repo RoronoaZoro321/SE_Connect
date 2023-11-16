@@ -18,26 +18,36 @@
     self.skills = []
     self.enrolls = [] -->
 
-    <h1>Title: {{data.title}}</h1>
-    <h4>Created by: {{data.user_id}} {{data.username}}</h4>
-    <p>Description: {{data.description}}</p>
+    <div class="title">
+        <h1>{{data.title}}</h1>
+        <h4>Created by : </h4>
+        <p><span>ID :</span> {{data.user_id}}</p> 
+        <p><span>Username :</span> {{data.username}}</p>
+        <h4>Description :</span></h4>
+        <p class="description_"> {{data.description}} </p>
+    </div>
+
     {% for skill in data.skills %}
         <br>
-        <h3>Title: {{skill.title}}</h3>
-        <p>Description: {{skill.description}}</p>
+        <div class="skill">
+            <h4>Required skill : <span>{{skill.title}}</span></h4>
+            <h4>Description : </span></h4>
+            <p class="description_"> {{skill.description}} </p>
+        </div>
         <br>
     {% endfor %}
 
-    <p><a href="/startup/enrolls/{{data.id}}">Enrolls</a></p>
-
-    {% if error %}
-        <p style="color: red;">{{error}}</p>
-    {% else %}
-        <p style="color:green;">{{success}}</p>
-    {% endif %}
-    
-    
-    <p><a href="/startup">back</a></p>
-
+    <div class="bottom_box">
+        <p><a href="/startup/enrolls/{{data.id}}">Enrolls</a></p>
+        <p><a href="/startup">back</a></p>
+        <div class="error-message">
+            {% if error %}
+                <p style="color: red;">{{error}}</p>
+            {% else %}
+                <p style="color:green;">{{success}}</p>
+            {% endif %}
+        </div>
+        
+    </div>
     {% endblock %}
 </body>

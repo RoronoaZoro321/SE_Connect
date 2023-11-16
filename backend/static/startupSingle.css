@@ -1,0 +1,84 @@
+.title {
+    margin-left: 100px;
+    margin-top: 50px;
+    line-height: 2.5; 
+    color: #3C486B;  
+}
+
+.title h1{
+    font-size: 28px;
+    text-align: center;
+    filter: drop-shadow(1px 2px 2px #80879d4d);
+}
+
+.title h4 {
+    font-size: 18px;
+}
+
+.title p{
+    text-indent: 20px;  
+}
+
+.title p span{
+    font-weight: 600;
+}
+
+.title .description_ {
+    text-indent: 20px;
+}
+
+.skill {
+    margin-left: 100px;
+    margin-top: 10px;
+    line-height: 2.5;
+    color: #3C486B;  
+}
+
+.skill h4 {
+    font-size: 18px;
+}
+
+.skill h4 span{
+    color: #F45050;
+}
+
+.skill p {
+    text-indent: 20px;  
+}
+
+.skill p span{
+    font-weight: 600;
+}
+
+.skill .description_ {
+    text-indent: 40px;
+}
+
+.bottom_box {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.bottom_box p {
+    display: inline-block;
+    padding: 10px;
+}
+
+.bottom_box p a{
+    border: solid 3px black;
+    border-radius: 20px;
+    padding: 10px;
+    color: #F9D949;
+    background-color: #F45050;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bottom_box p a:hover{
+    background-color: #F9D949;
+    color: #F45050;
+}
+
+.bottom_box .error-message p{
+    margin-top: 25px;
+}
