@@ -102,6 +102,10 @@
     margin-top: 3.5%;
 }
 
+.second button:hover{
+    background-color: rgb(164, 2, 2);
+}
+
 .c {
     margin-left: 8%;
     margin-bottom: 30px;
