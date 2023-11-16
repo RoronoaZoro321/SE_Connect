@@ -71,6 +71,21 @@
     margin-top: 10px;
 }
 
+.react button {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.react .col {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.react .toolTip {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
 /* Buttons Styles */
 
 button {
