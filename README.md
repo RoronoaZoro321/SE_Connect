@@ -5,6 +5,7 @@ pip install -r requirements.txt
 python main.py
 
 # Project Structure
+```
 SE_CONNECT/
 │
 ├── backend/
@@ -65,3 +66,4 @@ SE_CONNECT/
 ├── requirements.txt
 ├── README.md
 ├── main.py  # Uvicorn entry point
+```
